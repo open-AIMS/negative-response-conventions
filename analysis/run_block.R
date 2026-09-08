@@ -29,6 +29,10 @@ args <- commandArgs(trailingOnly = TRUE)
 block <- as.integer(args[1] %||% 1L)
 workers <- as.integer(args[2] %||% 20L)
 per_block <- as.integer(args[3] %||% 50L)
+## Optional fourth argument: a comma-separated list of cells, so the dispersion
+## cells can be deferred. They answer question 6, which is the least central of
+## the six, and holding them back takes a block from about 29 hours to 23.
+only <- if (length(args) >= 4L) strsplit(args[4], ",")[[1]] else NULL
 
 ## cmdstanr rebuilds a model in a temporary directory unless told otherwise, so
 ## every fit would recompile. Point it at a cache that persists across blocks.
@@ -38,6 +42,11 @@ options(cmdstanr_write_stan_file_dir = CACHE)
 
 iters <- seq((block - 1L) * per_block + 1L, block * per_block)
 cl_tab <- cells()
+if (!is.null(only)) {
+  missing <- setdiff(only, cl_tab$cell)
+  if (length(missing)) stop("no such cell: ", paste(missing, collapse = ", "))
+  cl_tab <- cl_tab[cl_tab$cell %in% only, , drop = FALSE]
+}
 
 queue <- do.call(rbind, lapply(seq_len(nrow(cl_tab)), function(i) {
   do.call(rbind, lapply(arm_names(), function(a) {
