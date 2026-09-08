@@ -12,17 +12,27 @@
 ## so a crashed block is restarted with the same command and costs only the
 ## fits that had not finished.
 
-suppressMessages({
-  library(bayesnec)
-  library(parallel)
-})
-
 ## Run from the repository root.
 ROOT <- getwd()
 if (!dir.exists(file.path(ROOT, "R"))) {
   stop("run this from the compendium root: R/ not found in ", ROOT)
 }
+
+## .libPaths BEFORE library(). Loading bayesnec first takes whatever is in the
+## user library -- 2.1.3.7 on this machine, which is the pre-#206 behaviour this
+## study exists to measure past. The run would have completed and reported the
+## old candidate set without any error. The assertion below is the backstop:
+## a study measuring the wrong version is worse than one that refuses to start.
 .libPaths(c(file.path(ROOT, "lib"), .libPaths()))
+suppressMessages({
+  library(bayesnec)
+  library(parallel)
+})
+BAYESNEC_MIN <- "2.1.3.33"
+if (utils::packageVersion("bayesnec") < BAYESNEC_MIN) {
+  stop("bayesnec ", utils::packageVersion("bayesnec"), " loaded from ",
+       dirname(find.package("bayesnec")), "; this study needs >= ", BAYESNEC_MIN)
+}
 for (f in list.files(file.path(ROOT, "R"), "\\.R$", full.names = TRUE)) source(f)
 
 args <- commandArgs(trailingOnly = TRUE)
