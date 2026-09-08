@@ -12,7 +12,29 @@
 
 CV_REF <- 0.096   # control coefficient of variation at the reference cell
 R_REF  <- 2.3     # control fold-change at the reference cell
-SIGMA_RATIO_HET <- 8.09  # residual SD at the asymptote / at the control
+
+## The residual scale is CONSTANT along the curve in every cell.
+##
+## The previous study generated it rising 8.09-fold from control to lower
+## asymptote and called that figure "calibrated from the real data". Measured
+## again on `alga`, within-dose SD against position on the curve, substituted
+## rows excluded and groups of fewer than four dropped:
+##
+##   c_proliferum   14 groups  fitted ratio 14.14  slope p < 0.001
+##   c_proliferum2  13 groups  fitted ratio  1.43  slope p = 0.36
+##   r_salina       10 groups  fitted ratio  1.21  slope p = 0.52
+##   r_salina2      12 groups  fitted ratio  1.51  slope p = 0.44
+##
+## One dataset of four has a gradient. 8.09 is not a fitted value at all: it is
+## the largest single dose-group ratio on that one dataset, n = 5 against a
+## control of n = 20, where the fitted value is 14.1. Before excluding
+## substituted rows, r_salina appeared to show ratios of 24 and 21 -- those
+## groups mix substituted zeros with measurements, so part of what was
+## calibrated against was the convention under test.
+##
+## Generating every cell at 8.09 therefore asserted as universal something seen
+## in one dataset, and made every arm misspecified in the same way, which is a
+## confound shared by the whole comparison rather than a feature of it. Flat.
 
 cells <- function() {
   base <- data.frame(
@@ -23,17 +45,11 @@ cells <- function() {
     answers     = c("Q1,Q2", "Q2", "Q2", "Q1,Q2", "Q3", "Q3", "Q4"),
     stringsAsFactors = FALSE
   )
-  # Every cell generates heteroscedastic, as the real data are, and fits
-  # homoscedastic, because bnec()'s default has no dispersion sub-model. The
-  # `disp` cells below refit the two ends of the precision axis with one, so the
-  # size of that misspecification is measured rather than caveated.
-  base$sigma_ratio <- SIGMA_RATIO_HET
+  # Homoscedastic generation, and bnec()'s default homoscedastic fit, so the
+  # mean structure of every candidate is the only thing under test.
+  base$sigma_ratio <- 1
   base$disp <- "none"
-  extra <- base[base$cell %in% c("p1", "p4"), ]
-  extra$cell <- paste0(extra$cell, "_disp")
-  extra$disp <- "loglinear"
-  extra$answers <- "Q6"
-  out <- rbind(base, extra)
+  out <- base
   out$sigma_0_abs <- sigma_0_at(CV_REF, R_ref = R_REF)
   # The control CV each cell actually realises, which is what the report plots
   # on the precision axis: sigma_0 is held fixed while top rises with R.
