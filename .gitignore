@@ -1,0 +1,6 @@
+lib/
+cmdstan_cache/
+results/*/
+!results/.gitkeep
+.Rhistory
+.RData
