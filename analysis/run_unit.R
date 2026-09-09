@@ -23,7 +23,7 @@ for (f in list.files(file.path(ROOT, "R"), "\\.R$", full.names = TRUE)) source(f
 
 ## Compiled Stan programs are shared across tasks and named by a hash of the
 ## code, so a warm cache means only the first task per program compiles.
-CACHE <- file.path(ROOT, "cmdstan_cache")
+CACHE <- Sys.getenv("NRC_STAN_CACHE", file.path(path.expand("~"), ".cache", "nrc-stan"))
 dir.create(CACHE, showWarnings = FALSE, recursive = TRUE)
 options(cmdstanr_write_stan_file_dir = CACHE)
 

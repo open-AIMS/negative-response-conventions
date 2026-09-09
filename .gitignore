@@ -1,5 +1,6 @@
 lib/
 cmdstan_cache/
+superceded/
 results/*/
 !results/.gitkeep
 .Rhistory

@@ -106,9 +106,31 @@ prepare_arm <- function(dat, arm) {
 #'
 #' `cores = 1` because the runner puts one iteration on one worker: nesting
 #' Stan's own parallelism inside that oversubscribes the machine.
+#'
+#' **Priors are fixed per cell and arm, not derived per realisation.** bayesnec
+#' derives its default priors from the response vector and brms writes them into
+#' the Stan source as literals, so every simulated dataset produced a textually
+#' different program and recompiled: 5,622 programs for 406 units, 40 MB and
+#' most of the runtime each. Measured directly -- refitting a second realisation
+#' with default priors compiled two new programs, and refitting it with the
+#' first realisation's priors compiled none.
+#'
+#' The priors used are still bayesnec's own defaults; they are derived once from
+#' a reference realisation of each cell and arm and then held fixed. Each arm
+#' keeps its own prior, derived from its own prepared data, so the arm-to-arm
+#' contrast the study measures is unaffected. What is removed is
+#' iteration-to-iteration prior jitter, which is nuisance variation: a prior
+#' that changes with every dataset is not really a prior. The predictor range is
+#' identical across realisations within a cell and arm, so the hard parameter
+#' bounds in the Stan code -- which would truncate a posterior if they were
+#' wrong -- do not vary at all; only the response-derived scales do, by a few
+#' per cent.
+#' @param prior A named list of `brmsprior` objects, one per equation, built
+#'   once per cell and arm by `analysis/build_priors.R` and held fixed across
+#'   iterations. See the note below on why.
 fit_arm <- function(dat, arm, seed = 1L, iter = 4000, warmup = 2000,
                     adapt_delta = 0.99, max_treedepth = 12,
-                    disp = c("none", "loglinear")) {
+                    disp = c("none", "loglinear"), prior = NULL) {
   disp <- match.arg(disp)
   if (is.null(getOption("cmdstanr_write_stan_file_dir"))) {
     stop("set options(cmdstanr_write_stan_file_dir = ...) before fitting; ",
@@ -125,6 +147,7 @@ fit_arm <- function(dat, arm, seed = 1L, iter = 4000, warmup = 2000,
   }
   fit <- try(
     bayesnec::bnec(prep$formula, data = prep$data, family = prep$family,
+                   prior = prior,
                    seed = seed, iter = iter, warmup = warmup,
                    control = list(adapt_delta = adapt_delta,
                                   max_treedepth = max_treedepth),

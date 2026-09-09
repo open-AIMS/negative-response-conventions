@@ -46,7 +46,7 @@ only <- if (length(args) >= 4L) strsplit(args[4], ",")[[1]] else NULL
 
 ## cmdstanr rebuilds a model in a temporary directory unless told otherwise, so
 ## every fit would recompile. Point it at a cache that persists across blocks.
-CACHE <- file.path(ROOT, "cmdstan_cache")
+CACHE <- Sys.getenv("NRC_STAN_CACHE", file.path(path.expand("~"), ".cache", "nrc-stan"))
 dir.create(CACHE, showWarnings = FALSE, recursive = TRUE)
 options(cmdstanr_write_stan_file_dir = CACHE)
 

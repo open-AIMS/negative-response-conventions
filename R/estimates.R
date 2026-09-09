@@ -51,13 +51,29 @@ arm_weights <- function(fit) {
   )
 }
 
+#' The fixed prior for one cell and arm
+#'
+#' Returns NULL if none has been built, in which case bnec() falls back to its
+#' own defaults and the fit recompiles. That is a correct fit, just an expensive
+#' one, so it warns rather than stops: a missing prior should not lose a unit.
+prior_for <- function(cell, arm, prior_dir = "priors") {
+  f <- file.path(prior_dir, sprintf("%s__%s.rds", cell, arm))
+  if (!file.exists(f)) {
+    warning("no fixed prior for ", cell, "/", arm, "; using bnec() defaults, ",
+            "which will recompile every model", call. = FALSE)
+    return(NULL)
+  }
+  readRDS(f)
+}
+
 #' Everything one (cell, iteration, arm) contributes
 #'
 #' Written to its own file by the runner, so the run is resumable by existence
 #' check and a lost block costs only the block.
-run_one <- function(cl, iteration, arm) {
+run_one <- function(cl, iteration, arm, prior_dir = "priors") {
   dat <- cell_dataset(cl, iteration)
-  res <- fit_arm(dat, arm, seed = 333L + iteration, disp = cl$disp)
+  pr <- prior_for(cl$cell, arm, prior_dir)
+  res <- fit_arm(dat, arm, seed = 333L + iteration, disp = cl$disp, prior = pr)
   rec <- res$record
   out <- list(cell = cl$cell, iteration = iteration, arm = arm,
               record = rec, estimates = NULL, weights = NULL)
