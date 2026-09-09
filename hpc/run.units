@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=nrc-units
 #SBATCH --partition=cpuq
-#SBATCH --array=1-4200%200
+#SBATCH --array=43-4200%200
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
@@ -12,9 +12,10 @@
 
 # One array task = one (cell, arm, iteration) unit on one dedicated core.
 #
-# --array=1-4200%200 is the full 100-iteration study, 200 tasks resident at a
-# time. Lower the %200 if the partition is busy; raise it if it is not. The
-# study is embarrassingly parallel, so throughput scales with that number.
+# --array=43-4200%200 is the 100-iteration study less the first 42 units, which
+# run.warmup does first to populate the compile cache. 200 tasks resident at a
+# time; lower the %200 if the partition is busy, raise it if not. The study is
+# embarrassingly parallel, so throughput scales with that number.
 #
 # --mem=3GB per task: the local run used about 1GB per concurrent fit, and a
 # model-averaged fit over 14 equations peaks higher than the average. 3GB is
@@ -33,8 +34,12 @@ module load singularity
 STUDY=/export/scratch/$USER/negative-response-conventions
 SIF=$STUDY/negative-response-conventions.sif
 
-cd "$STUDY"
-mkdir -p logs
+cd "$STUDY"; mkdir -p logs
+# Shared, not node-local: with the priors fixed there are only ~546 distinct
+# Stan programs for the whole study, so they are worth compiling once and
+# sharing rather than recompiling on every node.
+export NRC_STAN_CACHE="$STUDY/cmdstan_cache"
 
-singularity exec -B "$STUDY":"$STUDY" --pwd "$STUDY" "$SIF" \
+singularity exec -B "$STUDY":"$STUDY" --pwd "$STUDY" \
+  --env NRC_STAN_CACHE="$NRC_STAN_CACHE" "$SIF" \
   Rscript analysis/run_unit.R "$SLURM_ARRAY_TASK_ID" 100

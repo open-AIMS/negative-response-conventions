@@ -1,0 +1,35 @@
+#!/bin/bash
+#SBATCH --job-name=nrc-warmup
+#SBATCH --partition=cpuq
+#SBATCH --array=1-42
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=3GB
+#SBATCH --time=02:00:00
+#SBATCH --output=logs/warmup-%A_%a.log
+#SBATCH --error=logs/warmup-%A_%a.err
+
+# Compile every Stan program the study needs, once, before the main array runs.
+#
+# Units 1-42 are exactly one per cell and arm: the queue is iteration-major, and
+# there are 7 cells x 6 arms, so the first 42 units cover every combination at
+# iteration 1. Because the priors are fixed per cell and arm, those 42 units
+# compile every program the remaining 4,158 will ever need.
+#
+# This exists because cmdstanr does not lock the compile cache. Launching 200
+# tasks onto a cold shared cache would have hundreds of them writing the same
+# files to the same paths at the same time. After this job the cache is warm and
+# the main array only reads it.
+
+module load slurm
+module load singularity
+
+STUDY=/export/scratch/$USER/negative-response-conventions
+cd "$STUDY"; mkdir -p logs
+export NRC_STAN_CACHE="$STUDY/cmdstan_cache"
+
+singularity exec -B "$STUDY":"$STUDY" --pwd "$STUDY" \
+  --env NRC_STAN_CACHE="$NRC_STAN_CACHE" \
+  "$STUDY/negative-response-conventions.sif" \
+  Rscript analysis/run_unit.R "$SLURM_ARRAY_TASK_ID" 100

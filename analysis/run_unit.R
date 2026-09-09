@@ -13,7 +13,12 @@
 
 ROOT <- getwd()
 if (!dir.exists(file.path(ROOT, "R"))) stop("run from the compendium root")
-.libPaths(c(file.path(ROOT, "lib"), .libPaths()))
+## Only prepend the project library if it exists. Inside the container bayesnec
+## is installed in the image and lib/ is deliberately not synced, so this must
+## not fail or shadow when it is absent.
+if (dir.exists(file.path(ROOT, "lib"))) {
+  .libPaths(c(file.path(ROOT, "lib"), .libPaths()))
+}
 suppressMessages(library(bayesnec))
 if (utils::packageVersion("bayesnec") < "2.1.3.33") {
   stop("bayesnec ", utils::packageVersion("bayesnec"), " from ",

@@ -25,16 +25,38 @@ scp negative-response-conventions.sif <hpc>:/export/scratch/$USER/negative-respo
 ## Submit
 
 ```sh
-rsync -av --exclude lib --exclude cmdstan_cache --exclude results \
+rsync -av --exclude lib --exclude cmdstan_cache --exclude superceded \
+  --exclude results --exclude '*.sif' \
   ./ <hpc>:/export/scratch/$USER/negative-response-conventions/
+scp negative-response-conventions.sif \
+  <hpc>:/export/scratch/$USER/negative-response-conventions/
 ssh <hpc>
 cd /export/scratch/$USER/negative-response-conventions
-sbatch hpc/run.units
+./hpc/submit.sh 200
 ```
 
-`results/` is excluded from the sync deliberately: copy it across only if you
-want the HPC to skip units already computed locally, and copy it back the same
-way when the array finishes.
+`lib/` is excluded because `bayesnec` lives in the image; `run_unit.R` only
+prepends `lib/` when it exists, so its absence is correct rather than a
+fallback. `priors/` **is** synced and must be: those 42 files are what make the
+Stan programs identical across iterations.
+
+`results/` is excluded deliberately. Copy it across only if you want the HPC to
+skip units already computed locally, and copy it back the same way when the
+array finishes.
+
+## Two stages, and why
+
+`submit.sh` chains a 42-task warm-up before the main array, using
+`--dependency=afterok`.
+
+Units 1-42 are exactly one per cell and arm, because the queue is
+iteration-major and there are 7 cells x 6 arms. With the priors fixed, those 42
+units compile every Stan program the remaining 4,158 will ever need. The main
+array then only reads the cache.
+
+Without that, 200 tasks would start on a cold cache and write the same files to
+the same paths simultaneously; `cmdstanr` does not lock. It is the one failure
+mode that could waste a whole allocation.
 
 ## Throughput
 
@@ -44,9 +66,12 @@ way when the array finishes.
 | 100 | ~15 h |
 | 200 | ~7 h |
 
-Assuming 20 minutes per unit on a dedicated core, which is between the 13
-minutes measured idle locally and the 42 measured under contention. Confirm it
-against the first few task logs before trusting the rest of the table.
+Assuming 20 minutes per unit on a dedicated core, which was measured *before*
+the priors were fixed and therefore includes compiling about 14 Stan programs
+per unit. With the compile cache warm, a unit is sampling only and should be
+substantially quicker. Confirm against the first few task logs before trusting
+any of this table -- every previous estimate in this study has been wrong in the
+optimistic direction.
 
 ## Collate
 
