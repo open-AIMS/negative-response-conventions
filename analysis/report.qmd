@@ -1,0 +1,306 @@
+---
+title: "Conventions for handling negative response values: simulation results"
+format:
+  html:
+    toc: true
+    embed-resources: true
+    fig-width: 9
+    fig-height: 5
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r setup}
+library(ggplot2); library(dplyr); library(tidyr)
+m <- read.csv(here::here("results", "metrics_100iter.csv"))
+
+ARMS <- c("measured", "censored", "deleted", "floored", "beta", "gamma")
+# Hue order validated for colour-vision separation as a categorical set: every
+# adjacent pair clears the CVD and normal-vision floors on a light surface.
+# Reordering the arms means revalidating, because the check is on adjacent pairs.
+ARM_COL <- c(measured = "#1B6BC4", censored = "#0E7C61", deleted  = "#C25E12",
+             floored  = "#B0217A", beta     = "#7C7A00", gamma    = "#6B4EBF")
+m$arm <- factor(m$arm, levels = ARMS)
+m$estimate <- factor(m$estimate, levels = c("ErC10", "ErC50", "NSEC"))
+
+prec <- m |>
+  filter(cell %in% c("p1", "p2", "p3", "p4")) |>
+  mutate(cv = factor(sprintf("%.1f", 100 * cv_control),
+                     levels = c("9.6", "6.7", "2.8", "1.9")))
+
+# One label per series at the right-hand edge instead of a key: six hues in a
+# legend are harder to match to lines than a label sitting on the line it names.
+edge_label <- function(d, yvar) {
+  geom_text(data = subset(d, cv == "1.9"),
+            aes(label = arm, y = .data[[yvar]]), hjust = -0.15, size = 2.6,
+            show.legend = FALSE)
+}
+```
+
+## The study
+
+We simulated concentration-response data from a four-parameter curve
+(`nec4param`) in which specific growth rate falls from a positive control value
+to a negative lower asymptote, and we handed each simulated dataset to six
+analyses that differ only in how they treat the negative values. Every analysis
+uses `bayesnec` with package defaults, model-averaged over the declining
+candidate set the family allows, so a difference between arms is the difference
+a practitioner would obtain rather than a likelihood-only contrast.
+
+```{r arms-table}
+knitr::kable(
+  data.frame(
+    arm = ARMS,
+    `what the analyst does` = c(
+      "use the values as recorded",
+      "declare negatives left-censored at zero",
+      "delete the negative rows, keep the rest of their group",
+      "replace negatives with zero",
+      "floor, scale to (0, 1), fit a Beta",
+      "floor, fit a Gamma"),
+    family = c("gaussian", "gaussian", "gaussian", "gaussian", "Beta", "Gamma"),
+    check.names = FALSE),
+  caption = "**Table 1.** The six conventions compared. All six are reachable from `bnec()` defaults.")
+```
+
+Seven design cells were run, each 100 times. Four vary measurement precision
+alone, holding the design and the true values fixed, so that the control
+coefficient of variation falls from 9.6% to 1.9%. Two vary the depth of the
+lower asymptote. One stops the concentration series at the point where the true
+curve reaches zero growth, so that almost nothing is negative and the
+conventions have nothing to act on.
+
+The true values are known by construction, so each analysis is scored against
+them rather than against each other. We report relative bias, the proportion of
+95% credible intervals containing the truth, and the mean interval width.
+
+## Estimating ErC50
+
+The concentration halving the growth rate separates the conventions cleanly, and
+it separates them by whether the measurement is kept.
+
+```{r fig-erc50-bias, fig.height=4.2}
+d <- filter(prec, estimate == "ErC50")
+ggplot(d, aes(cv, rel_bias, colour = arm, group = arm)) +
+  geom_hline(yintercept = 0, linetype = "dashed", colour = "grey45") +
+  geom_line(linewidth = 0.7) + geom_point(size = 1.9) +
+  edge_label(d, "rel_bias") +
+  scale_colour_manual(values = ARM_COL, guide = "none") +
+  scale_x_discrete(expand = expansion(add = c(0.3, 1.1))) +
+  labs(x = "Control coefficient of variation (%) — more precise →",
+       y = "Relative bias in ErC50 (%)") +
+  theme_classic(base_size = 10) +
+  theme(panel.grid.major.y = element_line(colour = "grey92"))
+```
+
+**Figure 1.** Relative bias in the estimated ErC50 against measurement
+precision, 100 simulated datasets per point. Arms that keep the measurement
+converge on the true value; arms that replace it level off away from zero.
+
+Three arms converge as the experiment improves: `measured` from -0.8% to -0.2%,
+`censored` from -1.3% to -0.2%, and `deleted` from -2.5% to 0.0%. Their error is
+estimation error, and it behaves like estimation error.
+
+Two do not. `floored` settles at about -2.3% and `beta` at about -6.0%, and
+neither improves as the control coefficient of variation falls from 9.6% to
+1.9%. A discrepancy that does not shrink as the noise shrinks is
+misspecification, not imprecision, and no amount of experimental effort removes
+it.
+
+`gamma` is a special case that the bias alone misrepresents. Its ErC50 bias is
+near zero in every cell, but its intervals are more than twice as wide as any
+other arm's and its ErC10 is badly displaced, as the next section shows.
+
+## Estimating ErC10
+
+```{r fig-erc10-bias, fig.height=4.2}
+d <- filter(prec, estimate == "ErC10")
+ggplot(d, aes(cv, rel_bias, colour = arm, group = arm)) +
+  geom_hline(yintercept = 0, linetype = "dashed", colour = "grey45") +
+  geom_line(linewidth = 0.7) + geom_point(size = 1.9) +
+  edge_label(d, "rel_bias") +
+  scale_colour_manual(values = ARM_COL, guide = "none") +
+  scale_x_discrete(expand = expansion(add = c(0.3, 1.1))) +
+  labs(x = "Control coefficient of variation (%) — more precise →",
+       y = "Relative bias in ErC10 (%)") +
+  theme_classic(base_size = 10) +
+  theme(panel.grid.major.y = element_line(colour = "grey92"))
+```
+
+**Figure 2.** Relative bias in the estimated ErC10. `gamma` is displaced by
+about 20% at every level of precision.
+
+The four Gaussian arms are within a few per cent of the truth once the
+measurement is precise enough to resolve a 10% decline, and they converge.
+`gamma` does not: it underestimates ErC10 by 19% to 24% in every cell of the
+precision axis, and the error is flat, so a better experiment does not help.
+`beta` drifts the other way, from -4.8% to +8.9%.
+
+ErC10 is the harder estimate for every arm at realistic noise, because a 10%
+decline from the control has to be resolved against a control coefficient of
+variation of 9.6%. That is a property of the endpoint rather than of any
+convention, and it is why the precision axis is necessary to interpret it.
+
+## The NSEC
+
+The no-significant-effect concentration is where the conventions diverge most,
+and where they diverge in a direction that matters for protection.
+
+```{r fig-nsec-bias, fig.height=4.2}
+d <- filter(prec, estimate == "NSEC")
+ggplot(d, aes(cv, rel_bias, colour = arm, group = arm)) +
+  geom_hline(yintercept = 0, linetype = "dashed", colour = "grey45") +
+  geom_line(linewidth = 0.7) + geom_point(size = 1.9) +
+  edge_label(d, "rel_bias") +
+  scale_colour_manual(values = ARM_COL, guide = "none") +
+  scale_x_discrete(expand = expansion(add = c(0.3, 1.1))) +
+  labs(x = "Control coefficient of variation (%) — more precise →",
+       y = "Relative bias in the NSEC (%)") +
+  theme_classic(base_size = 10) +
+  theme(panel.grid.major.y = element_line(colour = "grey92"))
+```
+
+**Figure 3.** Relative bias in the estimated NSEC against the true no-effect
+concentration. The three arms that keep the measurement converge toward it from
+above; the three that replace it diverge downward as precision improves.
+
+The NSEC's expected value exceeds the true `nec` at any finite level of noise,
+because it is defined against a lower quantile of the control posterior: a
+noisier control gives a lower reference and pushes the crossing to the right. Its
+limiting value as the residual error goes to zero is the true `nec`, which is why
+the precision axis is the only way to read it.
+
+The arms that keep the measurement behave as that definition predicts. `measured`
+falls from +13.8% to +3.9%, `censored` from +13.4% to +2.1% and `deleted` from
++9.5% to +1.2%, all approaching the truth from above.
+
+The arms that replace it go the other way and keep going. `floored` moves from
+-10.5% to -52.9%, `beta` from -6.8% to -43.2%, and `gamma` from +10.1% to
+-69.5%. Improving the experiment makes these three worse, and at the highest
+precision tested they place the no-effect concentration between two and three
+times too low.
+
+## Interval coverage
+
+Bias understates the problem, because the intervals narrow around a displaced
+centre as the experiment improves.
+
+```{r fig-coverage, fig.height=4.2}
+d <- filter(prec, estimate == "ErC50")
+ggplot(d, aes(cv, coverage, colour = arm, group = arm)) +
+  geom_hline(yintercept = 0.95, linetype = "dashed", colour = "grey45") +
+  geom_line(linewidth = 0.7) + geom_point(size = 1.9) +
+  edge_label(d, "coverage") +
+  scale_colour_manual(values = ARM_COL, guide = "none") +
+  scale_x_discrete(expand = expansion(add = c(0.3, 1.1))) +
+  scale_y_continuous(limits = c(0, 1)) +
+  labs(x = "Control coefficient of variation (%) — more precise →",
+       y = "Proportion of 95% intervals containing the true ErC50") +
+  theme_classic(base_size = 10) +
+  theme(panel.grid.major.y = element_line(colour = "grey92"))
+```
+
+**Figure 4.** Coverage of the 95% credible interval for ErC50. The dashed line
+is nominal coverage. Monte Carlo standard error is about 1.5 percentage points
+at 100 iterations.
+
+```{r tab-coverage}
+m |>
+  filter(estimate == "ErC50", cell %in% c("p1", "p4")) |>
+  mutate(cell = ifelse(cell == "p1", "CV 9.6%", "CV 1.9%")) |>
+  select(cell, arm, rel_bias, coverage, width, rmse) |>
+  arrange(cell, arm) |>
+  knitr::kable(digits = c(0, 0, 2, 2, 3, 3),
+    col.names = c("cell", "arm", "bias (%)", "coverage", "mean width", "RMSE"),
+    caption = "**Table 2.** ErC50 at the two ends of the precision axis. Coverage and interval width are reported together, because either alone identifies the wrong arm as the best one.")
+```
+
+At the highest precision tested, `floored` contains the true ErC50 in 24 of 100
+intervals and `beta` in 48, against a nominal 95. Their bias at that point is
+only -2.3% and -6.0%; it is the narrowing of the interval around a displaced
+centre that destroys the coverage.
+
+A laboratory that improves its technique, adds replicates and reduces its
+control variability will, if it replaces its negative values, obtain an analysis
+that is more confident and no more accurate.
+
+Coverage and width have to be read together. `gamma` reaches 0.94 coverage at
+the highest precision, which looks respectable until its mean interval width of
+0.296 is compared with `measured`'s 0.134, and its ErC10 bias of -24% is
+recalled. Either statistic alone identifies the wrong arm as the best one.
+
+## Where the response barely goes negative
+
+```{r tab-ctl}
+m |>
+  filter(cell == "ctl", estimate %in% c("ErC50", "NSEC")) |>
+  select(estimate, arm, rel_bias, coverage) |>
+  arrange(estimate, arm) |>
+  knitr::kable(digits = c(0, 0, 2, 2),
+    col.names = c("estimate", "arm", "bias (%)", "coverage"),
+    caption = "**Table 3.** The control cell, in which the concentration series stops where the true curve reaches zero growth, so that almost no true mean is negative.")
+```
+
+Where the design does not reach the zero-growth boundary, the four Gaussian arms
+agree to within about two per cent on ErC50 and the conventions have nothing to
+act on. The two family-imposed arms still differ, because scaling to a
+proportion or fitting a Gamma changes the analysis whether or not any value is
+negative.
+
+This is the condition under which none of the results above apply. Reporting the
+proportion of observations at or below zero is what tells a reader which
+situation they are in.
+
+## What the study establishes
+
+The measurement should be kept. `measured` is unbiased to within one per cent on
+ErC50 at every level of precision tested, converges on the truth for all three
+estimates, and holds nominal coverage.
+
+Where the negative values were never recorded, censoring recovers almost all of
+what replacing them loses: `censored` tracks `measured` to within about half a
+percentage point on ErC50 across the precision axis.
+
+Deleting the negative rows is better than replacing them with zero but worse
+than either alternative above, and it discards information that censoring
+retains.
+
+Replacing negative values with zero biases ErC50 low, places the NSEC two to
+three times too low at high precision, and drives interval coverage to 0.24. The
+error does not shrink as the experiment improves.
+
+Imposing the boundary through the response distribution is the same practice
+reached by a different route, and it performs no better: `beta` carries the
+largest ErC50 bias in the study and `gamma` displaces ErC10 by about 20% at
+every level of precision while producing the widest intervals of any arm.
+
+## Provenance
+
+The study is 4,200 model-averaged fits: seven cells, six arms, 100 iterations,
+each fit averaging over the declining candidate set for its family. It ran on
+the AIMS HPC as a SLURM array, one unit per task, with zero failures. Peak
+memory was 1.93 GB per unit and the mean unit took 936 seconds.
+
+`bayesnec` was pinned at commit `0976caca`, version 2.1.3.33, from the `dev`
+branch. That is not the CRAN release: the current CRAN version is 2.1.3.1, which
+does not include the change peaking the `nec` and `ec50` gamma prior at the
+median predictor rather than at twice it. The priors are therefore a development
+default rather than a released one, and the exact values used are committed as
+42 files in `priors/`, one per cell and arm.
+
+Those priors are held fixed within a cell and arm rather than being derived from
+each realisation. `bayesnec` derives its defaults from the response vector and
+`brms` writes them into the Stan source as literals, so a prior that varies by
+realisation makes every fit a distinct Stan program: 5,622 compiles for 406
+units before this was changed. Fixing them makes the program identical across
+iterations. The predictor range is identical across realisations within a cell
+and arm, so the hard parameter bounds do not vary at all; only the
+response-derived scales would have, by a few per cent. Each arm keeps its own
+prior, derived from its own prepared data, so the contrast between arms is
+unaffected.
+
+The generating model is carried over verbatim from
+[open-AIMS/negative-sgr](https://github.com/open-AIMS/negative-sgr) at commit
+`0181d66e`. Nothing else is.

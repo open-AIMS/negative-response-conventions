@@ -5,7 +5,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=3GB
+#SBATCH --mem=6GB
 #SBATCH --time=02:00:00
 #SBATCH --output=logs/warmup-%A_%a.log
 #SBATCH --error=logs/warmup-%A_%a.err

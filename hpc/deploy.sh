@@ -46,7 +46,9 @@ if [ "${1:-}" = "--copy-only" ]; then
 fi
 
 echo "==> submitting"
-ssh "$HOST" "cd $DEST && chmod +x hpc/*.sh hpc/run.* && ./hpc/submit.sh $MAX_RESIDENT"
+# bash -lc so the module system is initialised: a non-login, non-interactive
+# ssh has no sbatch on PATH.
+ssh "$HOST" "bash -lc 'cd $DEST && chmod +x hpc/*.sh hpc/run.* && ./hpc/submit.sh $MAX_RESIDENT'"
 
 cat <<TXT
 

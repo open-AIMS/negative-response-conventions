@@ -8,6 +8,15 @@
 # concurrent tasks is the one failure mode that would waste a whole allocation.
 set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
+
+# sbatch is not on PATH in a non-interactive shell on this cluster; it comes
+# from a module. A plain `ssh host ./hpc/submit.sh` therefore failed with
+# "sbatch: command not found" and submitted nothing.
+if ! command -v sbatch > /dev/null 2>&1; then
+  module load slurm 2>/dev/null || true
+fi
+command -v sbatch > /dev/null 2>&1 || {
+  echo "sbatch not on PATH even after 'module load slurm'" >&2; exit 1; }
 MAX_RESIDENT="${1:-200}"
 mkdir -p logs
 

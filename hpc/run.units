@@ -5,7 +5,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=3GB
+#SBATCH --mem=6GB
 #SBATCH --time=02:00:00
 #SBATCH --output=logs/nrc-%A_%a.log
 #SBATCH --error=logs/nrc-%A_%a.err
@@ -17,9 +17,12 @@
 # time; lower the %200 if the partition is busy, raise it if not. The study is
 # embarrassingly parallel, so throughput scales with that number.
 #
-# --mem=3GB per task: the local run used about 1GB per concurrent fit, and a
-# model-averaged fit over 14 equations peaks higher than the average. 3GB is
-# headroom, not a measurement.
+# --mem=6GB per task. The local run averaged about 1GB per concurrent fit, but
+# that is an average across 20, not a peak for one, and a model-averaged fit
+# over 14 equations peaks higher. 6GB is deliberate over-provisioning rather
+# than a measurement: on a 64-core, 512GB node the binding constraint is cores
+# (64 tasks need 384GB of 512), so raising this costs nothing in throughput
+# while removing the risk of an OOM kill part-way through the array.
 #
 # --time=02:00:00: a unit took 13 minutes on an idle core locally and 42 under
 # contention. Two hours is generous for one dedicated core, and a task that

@@ -1,0 +1,53 @@
+#!/bin/bash
+#SBATCH --job-name=nrc-chain
+#SBATCH --partition=cpuq
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=1GB
+#SBATCH --time=00:20:00
+#SBATCH --output=logs/nrc-chain-%j.log
+#SBATCH --error=logs/nrc-chain-%j.err
+
+# Submit the extension once the previous array has drained.
+#
+# MaxJobCount is 10000 on this cluster and the running array already holds
+# ~4,158 pending tasks, so submitting 16,800 more up front fails with
+# "Slurm temporarily unable to accept job". This job waits on the dependency
+# and then submits, so the chain does not depend on a laptop staying awake.
+#
+# It re-submits itself if there is still more to queue than the cluster will
+# take, so an arbitrarily long study can be queued in cluster-sized bites.
+
+module load slurm
+STUDY=/export/scratch/$USER/negative-response-conventions
+cd "$STUDY"
+
+TARGET="${TARGET:-500}"
+UNITS_PER_ITER=42
+LAST=$(( TARGET * UNITS_PER_ITER ))
+
+# Resume from the first unit with no result file rather than a hard-coded
+# index, so this is correct however much has already been done.
+export LAST_UNIT=$LAST
+module load singularity
+FIRST=$(LAST_UNIT=$LAST singularity exec -B "$STUDY":"$STUDY" --pwd "$STUDY" --env LAST_UNIT="$LAST" \
+        "$STUDY/negative-response-conventions.sif" \
+        Rscript -e '
+suppressWarnings({
+  for (f in list.files("R", "\\.R$", full.names = TRUE)) source(f)
+  cl <- cells(); n <- as.integer(Sys.getenv("LAST_UNIT"))
+  q <- do.call(rbind, lapply(seq_len(ceiling(n / 42)), function(it)
+    do.call(rbind, lapply(seq_len(nrow(cl)), function(i)
+      data.frame(cell = cl$cell[i], arm = arm_names(), iteration = it,
+                 stringsAsFactors = FALSE)))))
+  p <- file.path("results", q$cell, q$arm, sprintf("iter_%04d.rds", q$iteration))
+  w <- which(!file.exists(p))
+  cat(if (length(w)) min(w) else n + 1L)
+})' 2>/dev/null)
+
+echo "target $TARGET iterations ($LAST units); first missing unit: $FIRST"
+if [ -z "$FIRST" ] || [ "$FIRST" -gt "$LAST" ]; then
+  echo "nothing left to submit"; exit 0
+fi
+LAST_UNIT=$LAST ./hpc/extend.sh "$TARGET" "$FIRST" "" 200

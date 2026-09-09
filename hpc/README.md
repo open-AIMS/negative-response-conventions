@@ -44,6 +44,18 @@ Stan programs identical across iterations.
 skip units already computed locally, and copy it back the same way when the
 array finishes.
 
+## Never share a Stan cache between the host and the container
+
+`cmdstanr` decides whether to reuse a compiled program by hashing the Stan code
+and checking the executable exists. It does not check that the binary matches
+the toolchain about to run it. `apptainer` bind-mounts `$HOME` by default, so an
+unset `NRC_STAN_CACHE` resolves to `~/.cache/nrc-stan` inside the container --
+the host's cache, full of host-compiled executables that the image would then
+try to run against its own cmdstan.
+
+Every script therefore sets `NRC_STAN_CACHE` explicitly, and the container path
+(`$STUDY/cmdstan_cache`) is deliberately not the host default. Keep it that way.
+
 ## Two stages, and why
 
 `submit.sh` chains a 42-task warm-up before the main array, using
