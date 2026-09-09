@@ -1,0 +1,40 @@
+#!/bin/bash
+#SBATCH --job-name=nrc-units
+#SBATCH --partition=cpuq
+#SBATCH --array=1-4200%200
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=3GB
+#SBATCH --time=02:00:00
+#SBATCH --output=logs/nrc-%A_%a.log
+#SBATCH --error=logs/nrc-%A_%a.err
+
+# One array task = one (cell, arm, iteration) unit on one dedicated core.
+#
+# --array=1-4200%200 is the full 100-iteration study, 200 tasks resident at a
+# time. Lower the %200 if the partition is busy; raise it if it is not. The
+# study is embarrassingly parallel, so throughput scales with that number.
+#
+# --mem=3GB per task: the local run used about 1GB per concurrent fit, and a
+# model-averaged fit over 14 equations peaks higher than the average. 3GB is
+# headroom, not a measurement.
+#
+# --time=02:00:00: a unit took 13 minutes on an idle core locally and 42 under
+# contention. Two hours is generous for one dedicated core, and a task that
+# exceeds it has gone wrong rather than been slow.
+#
+# Idempotent: run_unit.R skips a unit whose result file exists, so a failed or
+# timed-out subset is recovered by resubmitting the same array.
+
+module load slurm
+module load singularity
+
+STUDY=/export/scratch/$USER/negative-response-conventions
+SIF=$STUDY/negative-response-conventions.sif
+
+cd "$STUDY"
+mkdir -p logs
+
+singularity exec -B "$STUDY":"$STUDY" --pwd "$STUDY" "$SIF" \
+  Rscript analysis/run_unit.R "$SLURM_ARRAY_TASK_ID" 100

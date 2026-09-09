@@ -58,10 +58,18 @@ if (!is.null(only)) {
   cl_tab <- cl_tab[cl_tab$cell %in% only, , drop = FALSE]
 }
 
-queue <- do.call(rbind, lapply(seq_len(nrow(cl_tab)), function(i) {
-  do.call(rbind, lapply(arm_names(), function(a) {
-    data.frame(row = i, cell = cl_tab$cell[i], arm = a, iteration = iters,
-               stringsAsFactors = FALSE)
+## Iteration-major, not cell-major. mclapply dispatches the queue in order, so
+## ordering it by cell finishes one cell before starting the next: after 14
+## hours the first attempt had p1 complete, p2 a third done and five cells
+## empty. The block structure only delivers balance when a block finishes, and
+## a block takes about three days at the measured rate of 42 worker-minutes per
+## unit. Ordering by iteration first means every cell advances together, so the
+## run can be stopped at any point and still give the same number of iterations
+## in every cell.
+queue <- do.call(rbind, lapply(iters, function(it) {
+  do.call(rbind, lapply(seq_len(nrow(cl_tab)), function(i) {
+    data.frame(row = i, cell = cl_tab$cell[i], arm = arm_names(),
+               iteration = it, stringsAsFactors = FALSE)
   }))
 }))
 queue$path <- file.path(ROOT, "results", queue$cell, queue$arm,

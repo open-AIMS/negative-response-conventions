@@ -1,0 +1,2830 @@
+=== block 1 (iterations 1-20) starting 2026-09-09T08:11:53+08:00 ===
+block 1 | 7 cells x 6 arms x 20 iterations = 840 units, 680 to do
+Your response has a maximum of exactly 1 attained by exactly one observation, which is the signature of a response divided by its own observed maximum. Dividing by an extreme order statistic correlates every observation, discards the uncertainty in the divisor and biases ECx estimates upwards; it also forces one observation outside the open support of the Beta family. Prefer fitting the raw response and reading effective concentrations off the fitted curve with ecx(type = "absolute"), which is already the default. See Ritz et al. (2026) doi:10.1007/s10651-025-00698-y, and ?ecx for what to do instead.
+Dropping the model neclin, ecxlin as they are not valid in the case of a Gamma with identity link.
+Dropping the model(s) neclin, ecxlin as they are not valid in the case of a beta with identity link.
+Your response contains 10 value(s) at 0, which cannot be fitted because a Gamma distribution cannot represent a zero. They have been shifted to 0.000584. The substitution is recorded on the fitted object; see ?bnec_record. If those zeros are meaningful -- for example individuals that died -- consider family = hurdle_gamma() instead, which models them explicitly.
+Your response contains 10 value(s) at 0, which cannot be fitted because a beta distribution cannot represent a zero. They have been shifted to 0.00312. The substitution is recorded on the fitted object; see ?bnec_record. If those zeros are meaningful -- for example individuals that died -- consider family = zero_inflated_beta() instead, which models them explicitly.
+Your response contains 1 value(s) at 1, which cannot be fitted because a beta distribution is defined on the open interval (0, 1). They have been shifted to 0.999. The substitution is recorded on the fitted object; see ?bnec_record.
+Finding initial values which allow the response to be fitted using a nec3param model and a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec3param model and a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec3param model and a Gamma distribution.
+Finding initial values which allow the response to be fitted using a nec3param model and a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec3param model and a gaussian distribution.
+Dropping the model neclin, ecxlin as they are not valid in the case of a Gamma with identity link.
+Your response contains 10 value(s) at 0, which cannot be fitted because a Gamma distribution cannot represent a zero. They have been shifted to 0.00404. The substitution is recorded on the fitted object; see ?bnec_record. If those zeros are meaningful -- for example individuals that died -- consider family = hurdle_gamma() instead, which models them explicitly.
+Your response has a maximum of exactly 1 attained by exactly one observation, which is the signature of a response divided by its own observed maximum. Dividing by an extreme order statistic correlates every observation, discards the uncertainty in the divisor and biases ECx estimates upwards; it also forces one observation outside the open support of the Beta family. Prefer fitting the raw response and reading effective concentrations off the fitted curve with ecx(type = "absolute"), which is already the default. See Ritz et al. (2026) doi:10.1007/s10651-025-00698-y, and ?ecx for what to do instead.
+Finding initial values which allow the response to be fitted using a nec3param model and a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec3param model and a beta distribution.
+Dropping the model(s) neclin, ecxlin as they are not valid in the case of a beta with identity link.
+Your response contains 10 value(s) at 0, which cannot be fitted because a beta distribution cannot represent a zero. They have been shifted to 0.00934. The substitution is recorded on the fitted object; see ?bnec_record. If those zeros are meaningful -- for example individuals that died -- consider family = zero_inflated_beta() instead, which models them explicitly.
+Your response contains 1 value(s) at 1, which cannot be fitted because a beta distribution is defined on the open interval (0, 1). They have been shifted to 0.999. The substitution is recorded on the fitted object; see ?bnec_record.
+Finding initial values which allow the response to be fitted using a nec3param model and a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec3param model and a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec3param model and a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec3param model and a Gamma distribution.
+Your response has a maximum of exactly 1 attained by exactly one observation, which is the signature of a response divided by its own observed maximum. Dividing by an extreme order statistic correlates every observation, discards the uncertainty in the divFinding initial values which allow the response to be fitted using a nec3param model and a gaussian distribution.
+isor and biases ECx estimates upwards; it also forces one observation outside the open support of the Beta family. Prefer fitting the raw response and reading effective concentrations off the fitted curve with ecx(type = "absolute"), which is already the dDropping the model neclin, ecxlin as they are not valid in the case of a Gamma with identity link.
+efault. See Ritz et al. (2026) doi:10.1007/s10651-025-00698-y, and ?ecx for what to do instead.
+Dropping the model(s) neclin, ecxlin as they are not valid in the case of a beta with identity link.
+Your response contains 10 value(s) at 0, which cannot be fitted because a Gamma distribution cannot represent a zero. They have Finding initial values which allow the response to be fitted using a nec3param model and a beta distribution.
+Your response contains 10 value(s) at 0, which cannot be fitted because a beta distribution cannot represent a zero. They have been shifted to 0.0108. The substitution is recorded on the fitted object; see ?bnec_record. If those zeros are meaningful -- forbeen shifted to 0.00681. The substitution is recorded on the fitted object; see ?bnec_record. If those zeros are meaningful -- for example individuals that died -- consider family = hurdle_gamma() instead, which models them explicitly.
+ example individuals that died -- consider family = zero_inflated_beta() instead, which models them explicitly.
+Your response contains 1 value(s) at 1, which cannot be fitted because a beta distribution is defined on the open interval (0, 1). They have been shifted to 0.999. The substitution is recorded on the fitted object; see ?bnec_record.
+Finding initial values which allow the response to be fitted using a nec3param model and a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec3param model and a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec3param model and a beta distribution.
+Finding initial values which allow the response to be fitted using a nec3param model and a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec3param model and a Gamma distribution.
+Finding initial values which allow the response to be fitted using a nec3param model and a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec3param model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Loading required namespace: rstan
+Still searching for initial values for the nec3param model (95 of 10000 attempts so far). This can take a few minutes for a small or awkward design; the fit will proceed on Stan's default initialisation if it does not succeed.
+Still searching for initial values for the nec3param model (85 of 10000 attempts so far). This can take a few minutes for a small or awkward design; the fit will proceed on Stan's default initialisation if it does not succeed.
+Response variable modelled as a nec3param model using a beta distribution.
+Finding initial values which allow the response to be fitted using a nec4param model and a beta distribution.
+Loading required namespace: rstan
+Loading required namespace: rstan
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a nec3param model using a beta distribution.
+Finding initial values which allow the response to be fitted using a nec4param model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a nec3param model using a beta distribution.
+Finding initial values which allow the response to be fitted using a nec4param model and a beta distribution.
+Loading required namespace: rstan
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a nec3param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec4param model and a gaussian distribution.
+Response variable modelled as a nec4param model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxexp model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Still searching for initial values for the nec4param model (120 of 10000 attempts so far). This can take a few minutes for a small or awkward design; the fit will proceed on Stan's default initialisation if it does not succeed.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a nec4param model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxexp model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxexp model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxsigm model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a nec4param model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxexp model and a beta distribution.
+Loading required namespace: rstan
+Loading required namespace: rstan
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a nec3param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec4param model and a gaussian distribution.
+Loading required namespace: rstan
+Response variable modelled as a nec3param model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a nec4param model and a Gamma distribution.
+Loading required namespace: rstan
+Response variable modelled as a ecxexp model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxsigm model and a beta distribution.
+Response variable modelled as a nec3param model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a nec4param model and a Gamma distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Loading required namespace: rstan
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a nec3param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec4param model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Loading required namespace: rstan
+Response variable modelled as a nec3param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec4param model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a nec3param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec4param model and a gaussian distribution.
+Loading required namespace: rstan
+Response variable modelled as a ecxexp model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxsigm model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a nec3param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec4param model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Loading required namespace: rstan
+Loading required namespace: rstan
+Still searching for initial values for the nec4param model (90 of 10000 attempts so far). This can take a few minutes for a small or awkward design; the fit will proceed on Stan's default initialisation if it does not succeed.
+Loading required namespace: rstan
+Response variable modelled as a nec3param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec4param model and a gaussian distribution.
+Still searching for initial values for the nec4param model (97 of 10000 attempts so far). This can take a few minutes for a small or awkward design; the fit will proceed on Stan's default initialisation if it does not succeed.
+Loading required namespace: rstan
+Loading required namespace: rstan
+Response variable modelled as a nec3param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec4param model and a gaussian distribution.
+Response variable modelled as a nec3param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec4param model and a gaussian distribution.
+Response variable modelled as a nec3param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec4param model and a gaussian distribution.
+Response variable modelled as a nec3param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec4param model and a gaussian distribution.
+Response variable modelled as a ecxsigm model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecx4param model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Loading required namespace: rstan
+Response variable modelled as a nec3param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec4param model and a gaussian distribution.
+Loading required namespace: rstan
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a nec3param model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a nec4param model and a Gamma distribution.
+Loading required namespace: rstan
+Response variable modelled as a nec3param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec4param model and a gaussian distribution.
+Response variable modelled as a ecxsigm model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecx4param model and a beta distribution.
+Still searching for initial values for the nec4param model (89 of 10000 attempts so far). This can take a few minutes for a small or awkward design; the fit will proceed on Stan's default initialisation if it does not succeed.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxsigm model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecx4param model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecx4param model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1 model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Warning: 1 of 8000 (0.0%) transitions ended with a divergence.
+See https://mc-stan.org/misc/warnings for details.
+
+Loading required namespace: rstan
+Response variable modelled as a nec4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a neclin model and a gaussian distribution.
+Response variable modelled as a nec3param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a nec4param model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecx4param model using a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Finding initial values which allow the response to be fitted using a ecxwb1 model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a neclin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxlin model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecx4param model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1 model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb1 model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2 model and a beta distribution.
+Response variable modelled as a nec4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a neclin model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxlin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxexp model and a gaussian distribution.
+Response variable modelled as a nec4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a neclin model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a nec4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a neclin model and a gaussian distribution.
+Response variable modelled as a ecxexp model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxsigm model and a gaussian distribution.
+Response variable modelled as a ecxwb1 model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2 model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a nec4param model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxexp model and a Gamma distribution.
+Response variable modelled as a ecxwb2 model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1p3 model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a nec4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a neclin model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb1 model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2 model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a nec4param model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxexp model and a Gamma distribution.
+Response variable modelled as a nec4param model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxexp model and a Gamma distribution.
+Response variable modelled as a ecxwb2 model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1p3 model and a beta distribution.
+Response variable modelled as a ecxsigm model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecx4param model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb1p3 model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2p3 model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a nec4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a neclin model and a gaussian distribution.
+Response variable modelled as a ecxwb2 model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1p3 model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb2p3 model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxll5 model and a beta distribution.
+Response variable modelled as a nec4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a neclin model and a gaussian distribution.
+Response variable modelled as a ecxwb1p3 model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2p3 model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecx4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1 model and a gaussian distribution.
+Response variable modelled as a neclin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxlin model and a gaussian distribution.
+Response variable modelled as a nec4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a neclin model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a neclin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxlin model and a gaussian distribution.
+Response variable modelled as a ecxexp model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxsigm model and a Gamma distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb1p3 model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2p3 model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxexp model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxsigm model and a Gamma distribution.
+Response variable modelled as a nec4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a neclin model and a gaussian distribution.
+Response variable modelled as a ecxwb2p3 model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxll5 model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a neclin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxlin model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a nec4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a neclin model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb1 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2 model and a gaussian distribution.
+Response variable modelled as a neclin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxlin model and a gaussian distribution.
+Response variable modelled as a ecxwb2p3 model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxll5 model and a beta distribution.
+Response variable modelled as a ecxexp model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxsigm model and a Gamma distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a nec4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a neclin model and a gaussian distribution.
+Response variable modelled as a nec4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a neclin model and a gaussian distribution.
+Response variable modelled as a neclin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxlin model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Error : Failed to fit model ecxll5.
+Finding initial values which allow the response to be fitted using a ecxll4 model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxlin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxexp model and a gaussian distribution.
+Response variable modelled as a ecxlin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxexp model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a nec4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a neclin model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a neclin model using a gaussian distribution.
+Response variable modelled as a ecxlin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxlin model and a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxexp model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb2 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1p3 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a nec4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a neclin model and a gaussian distribution.
+Error : Failed to fit model ecxll5.
+Finding initial values which allow the response to be fitted using a ecxll4 model and a beta distribution.
+Response variable modelled as a neclin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxlin model and a gaussian distribution.
+Response variable modelled as a ecxexp model using a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Finding initial values which allow the response to be fitted using a ecxsigm model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxlin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxexp model and a gaussian distribution.
+Response variable modelled as a neclin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxlin model and a gaussian distribution.
+Response variable modelled as a ecxll4 model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxll3 model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxlin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxexp model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb1p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2p3 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxll4 model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxll3 model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxll3 model using a beta distribution.
+Fitted models are: nec3param nec4param ecxexp ecxsigm ecx4param ecxwb1 ecxwb2 ecxwb1p3 ecxwb2p3 ecxll4 ecxll3
+Response variable modelled as a ecxsigm model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecx4param model and a gaussian distribution.
+Response variable modelled as a ecxexp model using a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Finding initial values which allow the response to be fitted using a ecxsigm model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Warning: 80 of 4000 (2.0%) transitions ended with a divergence.
+See https://mc-stan.org/misc/warnings for details.
+
+Error : Failed to fit model ecxll5.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Finding initial values which allow the response to be fitted using a ecxll4 model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxlin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxexp model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxlin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxexp model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a neclin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxlin model and a gaussian distribution.
+Response variable modelled as a ecxsigm model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecx4param model and a Gamma distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxexp model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxsigm model and a gaussian distribution.
+Response variable modelled as a ecxwb2p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxll5 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxsigm model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecx4param model and a Gamma distribution.
+Response variable modelled as a ecxlin model using a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Finding initial values which allow the response to be fitted using a ecxexp model and a gaussian distribution.
+Response variable modelled as a neclin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxlin model and a gaussian distribution.
+Response variable modelled as a ecxexp model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxsigm model and a gaussian distribution.
+Response variable modelled as a ecxll3 model using a beta distribution.
+Fitted models are: nec3param nec4param ecxexp ecxsigm ecx4param ecxwb1 ecxwb2 ecxwb1p3 ecxwb2p3 ecxll4 ecxll3
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a neclin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxlin model and a gaussian distribution.
+Response variable modelled as a ecxexp model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxsigm model and a gaussian distribution.
+Response variable modelled as a ecxsigm model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecx4param model and a Gamma distribution.
+Response variable modelled as a ecxll4 model using a beta distribution.
+Finding initial values which allow the response to be fitted using a ecxll3 model and a beta distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: phi
+ - chain 2: phi
+ - chain 3: phi
+ - chain 4: phi
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a neclin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxlin model and a gaussian distribution.
+Response variable modelled as a neclin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxlin model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxexp curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxll3 model using a beta distribution.
+Fitted models are: nec3param nec4param ecxexp ecxsigm ecx4param ecxwb1 ecxwb2 ecxwb1p3 ecxwb2p3 ecxll4 ecxll3
+Response variable modelled as a ecxexp model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxsigm model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxexp model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxsigm model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxexp curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Response variable modelled as a ecxlin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxexp model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxsigm curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxlin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxexp model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxsigm model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecx4param model and a gaussian distribution.
+The fitted ecxsigm curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecx4param model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1 model and a Gamma distribution.
+The fitted ecx4param curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxexp model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxsigm model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxsigm model using a gaussian distribution.
+Response variable modelled as a ecxlin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecx4param model and a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxexp model and a gaussian distribution.
+Response variable modelled as a ecxsigm model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecx4param model and a gaussian distribution.
+Response variable modelled as a ecxlin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxexp model and a gaussian distribution.
+Response variable modelled as a ecxlin model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxexp model and a gaussian distribution.
+Response variable modelled as a ecx4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1 model and a gaussian distribution.
+Response variable modelled as a ecx4param model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1 model and a Gamma distribution.
+The fitted ecxexp curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecx4param curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxsigm model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecx4param model and a gaussian distribution.
+The fitted ecxwb1 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Still searching for initial values for the ecxexp model (185 of 10000 attempts so far). This can take a few minutes for a small or awkward design; the fit will proceed on Stan's default initialisation if it does not succeed.
+Response variable modelled as a ecx4param model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1 model and a Gamma distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxsigm curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Response variable modelled as a ecxexp model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxsigm model and a gaussian distribution.
+Response variable modelled as a ecxsigm model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecx4param model and a gaussian distribution.
+The fitted ecxwb1 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxsigm model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecx4param model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxwb2 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxexp model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxsigm model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecx4param curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxwb2 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Response variable modelled as a ecxexp model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxsigm model and a gaussian distribution.
+Response variable modelled as a ecxexp model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxsigm model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxsigm model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecx4param model and a gaussian distribution.
+The fitted ecxwb1p3 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecx4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1 model and a gaussian distribution.
+The fitted ecxwb1 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Error : Failed to fit model ecxwb1.
+Finding initial values which allow the response to be fitted using a ecxwb2 model and a Gamma distribution.
+Response variable modelled as a ecx4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1 model and a gaussian distribution.
+The fitted ecxwb1p3 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxwb2p3 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxwb2 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+The fitted ecxwb2p3 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecx4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxwb1p3 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+The fitted ecxll4 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Response variable modelled as a ecxwb1 model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2 model and a Gamma distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxll4 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Response variable modelled as a ecxwb1 model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2 model and a Gamma distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecx4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1 model and a gaussian distribution.
+Response variable modelled as a ecx4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1 model and a gaussian distribution.
+The fitted ecxll3 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+The fitted ecxwb2p3 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxll3 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Warning: 752 of 6000 (13.0%) transitions ended with a divergence.
+See https://mc-stan.org/misc/warnings for details.
+
+Error : Failed to fit model ecxll5.
+Finding initial values which allow the response to be fitted using a ecxll4 model and a gaussian distribution.
+Response variable modelled as a ecxsigm model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecx4param model and a gaussian distribution.
+Response variable modelled as a ecxsigm model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecx4param model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxsigm model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecx4param model and a gaussian distribution.
+The fitted ecxll4 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Response variable modelled as a ecxsigm model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecx4param model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecx4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1 model and a gaussian distribution.
+Response variable modelled as a ecxll4 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxll3 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxll3 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb2 model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1p3 model and a Gamma distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxexp model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxsigm model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb1 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2 model and a gaussian distribution.
+Response variable modelled as a ecxll3 model using a gaussian distribution.
+Fitted models are: nec3param nec4param neclin ecxlin ecxexp ecxsigm ecx4param ecxwb1 ecxwb2 ecxwb1p3 ecxwb2p3 ecxll4 ecxll3
+Response variable modelled as a ecxwb1 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb2 model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1p3 model and a Gamma distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb2 model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1p3 model and a Gamma distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb1 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecx4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1 model and a gaussian distribution.
+Response variable modelled as a ecx4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb1 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecx4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1 model and a gaussian distribution.
+Response variable modelled as a ecxsigm model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecx4param model and a gaussian distribution.
+Response variable modelled as a ecxwb1 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb1p3 model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2p3 model and a Gamma distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxlin curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Response variable modelled as a ecxwb2 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1p3 model and a gaussian distribution.
+Response variable modelled as a ecx4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxexp curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Response variable modelled as a ecxwb1p3 model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2p3 model and a Gamma distribution.
+Response variable modelled as a ecxwb1p3 model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2p3 model and a Gamma distribution.
+Response variable modelled as a ecxwb2 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1p3 model and a gaussian distribution.
+Response variable modelled as a ecxwb1 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2 model and a gaussian distribution.
+The fitted ecxsigm curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb1 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb2 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1p3 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecx4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecx4param curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb2p3 model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxll5 model and a Gamma distribution.
+The fitted ecxwb1 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb2 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1p3 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb2p3 model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxll5 model and a Gamma distribution.
+The fitted ecxwb2 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Response variable modelled as a ecxwb2p3 model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxll5 model and a Gamma distribution.
+Response variable modelled as a ecxwb1p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2p3 model and a gaussian distribution.
+Response variable modelled as a ecxwb1p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2p3 model and a gaussian distribution.
+Response variable modelled as a ecxwb1 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb2 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1p3 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxwb1p3 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+The control group's observed and simulated response differ by more than 15% for: nec3param, nec4param, ecxexp, ecxwb1p3.
+nsec() reads its reference from the control, so this is the region most likely to move a reported no-effect concentration.
+See check_fit() for the per-group table. This is a modelling result, not a fault.
+Response variable modelled as a ecxwb2 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1p3 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxwb2p3 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Response variable modelled as a ecxwb1p3 model using a gaussian distribution.
+Response variable modelled as a ecxwb1 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2p3 model and a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2 model and a gaussian distribution.
+Response variable modelled as a ecxwb1 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2 model and a gaussian distribution.
+The control group's observed and simulated response differ by more than 15% for: nec3param, nec4param, ecxexp, ecx4param, ecxwb1, ecxwb2, ecxwb1p3, ecxwb2p3, ecxll4, ecxll3.
+nsec() reads its reference from the control, so this is the region most likely to move a reported no-effect concentration.
+See check_fit() for the per-group table. This is a modelling result, not a fault.
+Response variable modelled as a ecx4param model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1 model and a gaussian distribution.
+Response variable modelled as a ecxwb1p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2p3 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxll4 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+The control group's observed and simulated response differ by more than 15% for: nec3param, nec4param, ecxexp, ecxsigm, ecx4param, ecxwb1, ecxwb2, ecxwb1p3, ecxwb2p3, ecxll4, ecxll3.
+nsec() reads its reference from the control, so this is the region most likely to move a reported no-effect concentration.
+See check_fit() for the per-group table. This is a modelling result, not a fault.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb1 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb1p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2p3 model and a gaussian distribution.
+The fitted ecxll3 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Response variable modelled as a ecxwb2p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxll5 model and a gaussian distribution.
+Response variable modelled as a ecxwb2p3 model using a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Finding initial values which allow the response to be fitted using a ecxll5 model and a gaussian distribution.
+Response variable modelled as a ecxwb2 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1p3 model and a gaussian distribution.
+Response variable modelled as a ecxwb2p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxll5 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Error : Failed to fit model ecxll5.
+Finding initial values which allow the response to be fitted using a ecxll4 model and a Gamma distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb2p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxll5 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb2 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1p3 model and a gaussian distribution.
+Response variable modelled as a ecxwb1p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2p3 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb2p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxll5 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb1 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2 model and a gaussian distribution.
+Response variable modelled as a ecxwb2 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1p3 model and a gaussian distribution.
+Response variable modelled as a ecxll4 model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxll3 model and a Gamma distribution.
+Response variable modelled as a ecxwb1p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2p3 model and a gaussian distribution.
+Response variable modelled as a ecxwb2 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1p3 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Error : Failed to fit model ecxll5.
+Finding initial values which allow the response to be fitted using a ecxll4 model and a Gamma distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb1p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2p3 model and a gaussian distribution.
+Response variable modelled as a ecxwb2p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxll5 model and a gaussian distribution.
+Response variable modelled as a ecxwb2 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1p3 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb1p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2p3 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxll3 model using a Gamma distribution.
+Fitted models are: nec3param nec4param ecxexp ecxsigm ecx4param ecxwb2 ecxwb1p3 ecxwb2p3 ecxll4 ecxll3
+Response variable modelled as a ecxll5 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxll4 model and a gaussian distribution.
+Response variable modelled as a ecxll4 model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxll3 model and a Gamma distribution.
+Response variable modelled as a ecxll5 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxll4 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb2p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxll5 model and a gaussian distribution.
+Response variable modelled as a ecxwb1p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2p3 model and a gaussian distribution.
+Response variable modelled as a ecxwb2p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxll5 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxexp curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb1 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxsigm curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxwb2p3 model using a gaussian distribution.
+Response variable modelled as a ecxwb1p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxll5 model and a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2p3 model and a gaussian distribution.
+Response variable modelled as a ecxll4 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxll3 model and a gaussian distribution.
+The fitted ecx4param curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Response variable modelled as a ecxll3 model using a Gamma distribution.
+Fitted models are: nec3param nec4param ecxexp ecxsigm ecx4param ecxwb1 ecxwb2 ecxwb1p3 ecxwb2p3 ecxll4 ecxll3
+Response variable modelled as a ecxll5 model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxll4 model and a Gamma distribution.
+Response variable modelled as a ecxwb2 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1p3 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxll4 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxll3 model and a gaussian distribution.
+The fitted ecxwb2 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The control group's observed and simulated response differ by more than 15% for: nec3param, nec4param, ecxlin, ecxexp, ecxsigm, ecx4param, ecxwb1, ecxwb2, ecxwb1p3, ecxll4, ecxll3.
+nsec() reads its reference from the control, so this is the region most likely to move a reported no-effect concentration.
+See check_fit() for the per-group table. This is a modelling result, not a fault.
+Response variable modelled as a ecxwb2p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxll5 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxwb1p3 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+The fitted ecxexp curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxll3 model using a gaussian distribution.
+Fitted models are: nec3param nec4param neclin ecxlin ecxexp ecxsigm ecx4param ecxwb1 ecxwb2 ecxwb1p3 ecxwb2p3 ecxll5 ecxll4 ecxll3
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxsigm curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+The fitted ecxwb2p3 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Response variable modelled as a ecxwb2p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxll5 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+Response variable modelled as a ecxll4 model using a Gamma distribution.
+Finding initial values which allow the response to be fitted using a ecxll3 model and a Gamma distribution.
+The fitted ecx4param curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Response variable modelled as a ecxll3 model using a gaussian distribution.
+Fitted models are: nec3param nec4param neclin ecxlin ecxexp ecxsigm ecx4param ecxwb1 ecxwb2 ecxwb1p3 ecxwb2p3 ecxll5 ecxll4 ecxll3
+The fitted ecxll4 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Response variable modelled as a ecxwb2 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb1p3 model and a gaussian distribution.
+The fitted ecxwb1 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxlin curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+The fitted ecxll3 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+The fitted ecxwb2 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Response variable modelled as a ecxwb1p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2p3 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: shape
+ - chain 2: shape
+ - chain 3: shape
+ - chain 4: shape
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxexp curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxwb1p3 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+The fitted ecxlin curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Warning: 6 of 8000 (0.0%) transitions ended with a divergence.
+See https://mc-stan.org/misc/warnings for details.
+
+Response variable modelled as a ecxll5 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxll4 model and a gaussian distribution.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxsigm curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Response variable modelled as a ecxll3 model using a Gamma distribution.
+Fitted models are: nec3param nec4param ecxexp ecxsigm ecx4param ecxwb1 ecxwb2 ecxwb1p3 ecxwb2p3 ecxll5 ecxll4 ecxll3
+The fitted ecxexp curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+The fitted ecxwb2p3 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+The fitted ecx4param curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Response variable modelled as a ecxwb1p3 model using a gaussian distribution.
+Finding initial values which allow the response to be fitted using a ecxwb2p3 model and a gaussian distribution.
+Warning: 37 of 4000 (1.0%) transitions ended with a divergence.
+See https://mc-stan.org/misc/warnings for details.
+
+Error : Failed to fit model ecxll5.
+Finding initial values which allow the response to be fitted using a ecxll4 model and a gaussian distribution.
+Warning: 246 of 4000 (6.0%) transitions ended with a divergence.
+See https://mc-stan.org/misc/warnings for details.
+
+The fitted ecxll4 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Error : Failed to fit model ecxll5.
+Finding initial values which allow the response to be fitted using a ecxll4 model and a gaussian distribution.
+The fitted ecxsigm curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+The fitted ecxwb1 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxll3 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+The fitted ecxexp curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+Init values were only set for a subset of parameters. 
+Missing init values for the following parameters:
+ - chain 1: sigma
+ - chain 2: sigma
+ - chain 3: sigma
+ - chain 4: sigma
+
+To disable this message use options(cmdstanr_warn_inits = FALSE).
+
+The fitted ecxwb2 curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
+The fitted ecx4param curve does not fall to the control's 0.01 quantile within the predictor range for 80 of 8000 draws. Those draws are excluded from the NSEC summary, which is therefore censored above the highest concentration tested.
