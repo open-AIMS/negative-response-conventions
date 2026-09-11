@@ -87,7 +87,10 @@ if [ -f "$BAYESNEC_REPO/hpc/image.lock" ]; then
 fi
 
 echo "==> exporting bayesnec $COMMIT from $BAYESNEC_REPO"
-[ -d "$BAYESNEC_REPO/.git" ] || {
+# Asked of git rather than tested as a directory: in a git worktree .git is a
+# file pointing at the main repository, so a -d test rejects a perfectly good
+# checkout.
+git -C "$BAYESNEC_REPO" rev-parse --git-dir > /dev/null 2>&1 || {
   echo "no git checkout at $BAYESNEC_REPO; set BAYESNEC_REPO in hpc/local.conf" >&2
   exit 1; }
 git -C "$BAYESNEC_REPO" cat-file -e "$COMMIT^{commit}" 2>/dev/null || {
