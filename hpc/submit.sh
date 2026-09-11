@@ -1,11 +1,14 @@
 #!/bin/bash
-# Submit the study: warm-up array, then the main array on a dependency.
+# Submit the study: warm-up array, then the simulation on a dependency, and the
+# case studies alongside.
 #
 #   ./hpc/submit.sh [MAX_RESIDENT]
 #
-# Chained the same way as ssdsims-org/test_run/poc-hpc: the main array does not
-# start unless the warm-up succeeded, because a cold compile cache under 200
-# concurrent tasks is the one failure mode that would waste a whole allocation.
+# The simulation waits on the warm-up because a cold compile cache under 200
+# concurrent tasks is the one failure mode that would waste a whole allocation,
+# and because the warm-up is what installs bayesnec. The case studies wait on it
+# for the install alone: their Stan programs are their own, so there is no cache
+# for the warm-up to fill on their behalf.
 set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
@@ -21,13 +24,18 @@ MAX_RESIDENT="${1:-200}"
 mkdir -p logs
 
 WARM=$(sbatch --parsable hpc/run.warmup)
-echo "warm-up job:  $WARM  (42 units, one per cell and arm)"
+echo "warm-up:     $WARM  (42 units, one per cell and arm; task 1 installs bayesnec)"
 
 MAIN=$(sbatch --parsable --dependency=afterok:"$WARM" \
        --array=43-4200%"$MAX_RESIDENT" hpc/run.units)
-echo "main job:     $MAIN  (units 43-4200, $MAX_RESIDENT resident)"
-echo
-echo "watch:    squeue -u \$USER"
-echo "progress: find results -name '*.rds' | wc -l   # of 4200"
-echo "collate:  singularity exec -B \$PWD:\$PWD --pwd \$PWD \\"
-echo "            negative-response-conventions.sif Rscript analysis/collate.R"
+echo "simulation:  $MAIN  (units 43-4200, $MAX_RESIDENT resident)"
+
+CASES=$(sbatch --parsable --dependency=afterok:"$WARM" hpc/run.cases)
+echo "case studies: $CASES  (24 units)"
+
+cat <<TXT
+
+watch:      squeue -u \$USER
+simulation: find results -name '*.rds' | wc -l         # of 4200
+cases:      find results_cases -name '*.rds' | wc -l   # of 24
+TXT

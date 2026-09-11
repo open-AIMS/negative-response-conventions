@@ -1,0 +1,22 @@
+# The bayesnec the study is run against.
+#
+# The container holds the toolchain and not the package (see hpc/README.md), so
+# the job installs bayesnec from source at start-up and this file is what says
+# which source. hpc/deploy.sh exports this commit from a local checkout and
+# copies it into the job directory; the job refuses to run if what it installed
+# does not report the version below.
+#
+# Changing this is a change to the study. Every fit in results/ was produced by
+# the commit recorded here, and the priors in priors/ were derived from it.
+commit: 25466e53d420b809b4b18794228729d2265c595f
+version: 2.1.3.33
+branch: dev
+# What this commit brings that the previous run (0976caca) did not, and why the
+# study is being re-run rather than extended:
+#   #304  the nec and ec50 priors are built on the log of the predictor, so
+#         their central 95% covers the tested series rather than a sixth of it
+#   #307  the regularizing set is defined once and anchored on the predictor
+#   #312  the initial-value search accepts chains individually and bands the
+#         curve on level means, which changes the starting values of every fit
+#   #315  the regularizing predictor prior
+# Results from before this commit are not comparable and are not mixed with it.

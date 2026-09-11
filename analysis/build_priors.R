@@ -23,7 +23,14 @@
 
 ROOT <- getwd()
 if (!dir.exists(file.path(ROOT, "R"))) stop("run from the compendium root")
-.libPaths(c(file.path(ROOT, "lib"), .libPaths()))
+## Only prepend the project library if it exists, exactly as run_unit.R does.
+## Prepending it unconditionally is worse than useless: on 2026-09-11 a stale
+## lib/ left over from an earlier install shadowed the library this was run
+## against and the priors were rebuilt from the superseded package without any
+## error, which is the quietest way this could go wrong.
+if (dir.exists(file.path(ROOT, "lib"))) {
+  .libPaths(c(file.path(ROOT, "lib"), .libPaths()))
+}
 suppressMessages(library(bayesnec))
 if (utils::packageVersion("bayesnec") < "2.1.3.33") {
   stop("bayesnec ", utils::packageVersion("bayesnec"), "; need >= 2.1.3.33")

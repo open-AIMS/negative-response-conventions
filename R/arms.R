@@ -63,9 +63,24 @@ prepare_arm <- function(dat, arm) {
     fam <- gaussian(link = "identity")
 
   } else if (arm == "censored") {
-    d <- transform(dat, y = pmax(sgr, 0),
-                   cens = ifelse(sgr < 0, "left", "none"))
-    rec$n_altered <- n_neg
+    # Left-censoring declares that the truth lies at or below a bound, so the
+    # bound should be the tightest one the measurement supports. For a value
+    # that was measured and came out negative that is zero: withdrawing the
+    # magnitude is the convention under test. For a row that was never measured
+    # -- a population below a counting limit -- it is the limit itself, which is
+    # a stronger statement than "below zero" and is the one thing the test does
+    # establish about that row.
+    #
+    # `cens_bound` and `below_limit` are optional and absent in the simulation,
+    # where every row is measured and the bound is zero everywhere. Supplying
+    # them is what lets the case studies run this same definition rather than a
+    # second copy of it.
+    b <- if ("cens_bound" %in% names(dat)) dat$cens_bound else rep(0, nrow(dat))
+    bl <- if ("below_limit" %in% names(dat)) dat$below_limit else rep(FALSE, nrow(dat))
+    left <- bl | dat$sgr < b
+    d <- transform(dat, y = ifelse(left, b, sgr),
+                   cens = ifelse(left, "left", "none"))
+    rec$n_altered <- sum(left)
     form <- y | cens(cens) ~ crf(x, "decline")
     fam <- gaussian(link = "identity")
 

@@ -1,0 +1,38 @@
+#!/bin/bash
+#SBATCH --job-name=nrc-cases
+#SBATCH --partition=cpuq
+#SBATCH --array=1-24
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=12GB
+#SBATCH --time=06:00:00
+#SBATCH --output=logs/nrc-case-%A_%a.log
+
+# One array task = one (dataset, arm) case-study unit: four marine microalgal
+# growth tests by six conventions.
+#
+# --mem=12GB, double the simulation's, and --time=06:00:00, triple it. The real
+# datasets are larger than the simulated ones (85 rows against 70, 14
+# concentrations against 12) and take their own default priors rather than a
+# fixed one, so their Stan programs are distinct from the simulation's and from
+# each other -- the compile cache does not carry over. Measured on a workstation
+# before the initial-value rewrite, one arm took 38 minutes; this is generous
+# for one dedicated core and a task that exceeds it has gone wrong.
+#
+# Not chained behind the simulation: 24 units is a small allocation and the
+# vignette needs them first, so they are submitted alongside.
+#
+# Idempotent by the same existence check as the simulation.
+
+set -euo pipefail
+# Sourced by absolute path, not relative to this file: SLURM runs a copy of the
+# submitted script from its own spool directory, so $BASH_SOURCE does not point
+# into the job directory.
+STUDY="${NRC_STUDY:-/export/scratch/$USER/negative-response-conventions}"
+source "$STUDY/hpc/job-common.sh"
+
+[ -f "$LIB/.installed" ] || {
+  echo "bayesnec is not installed in $LIB; run hpc/run.warmup first" >&2; exit 1; }
+
+nrc_r analysis/run_case.R "$SLURM_ARRAY_TASK_ID"

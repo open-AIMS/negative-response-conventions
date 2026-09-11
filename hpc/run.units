@@ -8,41 +8,34 @@
 #SBATCH --mem=6GB
 #SBATCH --time=02:00:00
 #SBATCH --output=logs/nrc-%A_%a.log
-#SBATCH --error=logs/nrc-%A_%a.err
 
 # One array task = one (cell, arm, iteration) unit on one dedicated core.
 #
 # --array=43-4200%200 is the 100-iteration study less the first 42 units, which
-# run.warmup does first to populate the compile cache. 200 tasks resident at a
-# time; lower the %200 if the partition is busy, raise it if not. The study is
-# embarrassingly parallel, so throughput scales with that number.
+# run.warmup does first to populate the compile cache and install the package.
+# 200 tasks resident at a time; the study is embarrassingly parallel, so
+# throughput scales with that number.
 #
-# --mem=6GB per task. The local run averaged about 1GB per concurrent fit, but
-# that is an average across 20, not a peak for one, and a model-averaged fit
-# over 14 equations peaks higher. 6GB is deliberate over-provisioning rather
-# than a measurement: on a 64-core, 512GB node the binding constraint is cores
-# (64 tasks need 384GB of 512), so raising this costs nothing in throughput
-# while removing the risk of an OOM kill part-way through the array.
+# --mem=6GB per task is over-provisioning rather than a measurement. On a
+# 64-core, 512GB node the binding constraint is cores, so raising it costs
+# nothing in throughput while removing the risk of an OOM kill part-way through.
 #
-# --time=02:00:00: a unit took 13 minutes on an idle core locally and 42 under
-# contention. Two hours is generous for one dedicated core, and a task that
-# exceeds it has gone wrong rather than been slow.
+# --time=02:00:00: a unit took 13 minutes on an idle core in the previous run.
+# The initial-value search that dominated those times was rewritten in bayesnec
+# #312, so units under the pinned commit should be faster rather than slower,
+# but the limit is left where it was until that is measured rather than assumed.
 #
 # Idempotent: run_unit.R skips a unit whose result file exists, so a failed or
 # timed-out subset is recovered by resubmitting the same array.
 
-module load slurm
-module load singularity
+set -euo pipefail
+# Sourced by absolute path, not relative to this file: SLURM runs a copy of the
+# submitted script from its own spool directory, so $BASH_SOURCE does not point
+# into the job directory.
+STUDY="${NRC_STUDY:-/export/scratch/$USER/negative-response-conventions}"
+source "$STUDY/hpc/job-common.sh"
 
-STUDY=/export/scratch/$USER/negative-response-conventions
-SIF=$STUDY/negative-response-conventions.sif
+[ -f "$LIB/.installed" ] || {
+  echo "bayesnec is not installed in $LIB; run hpc/run.warmup first" >&2; exit 1; }
 
-cd "$STUDY"; mkdir -p logs
-# Shared, not node-local: with the priors fixed there are only ~546 distinct
-# Stan programs for the whole study, so they are worth compiling once and
-# sharing rather than recompiling on every node.
-export NRC_STAN_CACHE="$STUDY/cmdstan_cache"
-
-singularity exec -B "$STUDY":"$STUDY" --pwd "$STUDY" \
-  --env NRC_STAN_CACHE="$NRC_STAN_CACHE" "$SIF" \
-  Rscript analysis/run_unit.R "$SLURM_ARRAY_TASK_ID" 100
+nrc_r analysis/run_unit.R "$SLURM_ARRAY_TASK_ID" 100

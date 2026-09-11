@@ -5,31 +5,49 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=6GB
-#SBATCH --time=02:00:00
-#SBATCH --output=logs/warmup-%A_%a.log
-#SBATCH --error=logs/warmup-%A_%a.err
+#SBATCH --mem=8GB
+#SBATCH --time=04:00:00
+#SBATCH --output=logs/nrc-warmup-%A_%a.log
 
-# Compile every Stan program the study needs, once, before the main array runs.
+# One task per cell and arm: the first iteration of each, which between them
+# cover every distinct Stan program the study compiles. The main array runs on a
+# dependency behind this, because a cold compile cache under 200 concurrent
+# tasks is the one failure mode that would waste a whole allocation.
 #
-# Units 1-42 are exactly one per cell and arm: the queue is iteration-major, and
-# there are 7 cells x 6 arms, so the first 42 units cover every combination at
-# iteration 1. Because the priors are fixed per cell and arm, those 42 units
-# compile every program the remaining 4,158 will ever need.
-#
-# This exists because cmdstanr does not lock the compile cache. Launching 200
-# tasks onto a cold shared cache would have hundreds of them writing the same
-# files to the same paths at the same time. After this job the cache is warm and
-# the main array only reads it.
+# Task 1 additionally installs bayesnec, and the other 41 wait for it. The
+# install is not done per task: 200 array tasks each running R CMD INSTALL into
+# the same directory is the same work 200 times with a race at the end of it.
 
-module load slurm
-module load singularity
+set -euo pipefail
+# Sourced by absolute path, not relative to this file: SLURM runs a copy of the
+# submitted script from its own spool directory, so $BASH_SOURCE does not point
+# into the job directory.
+STUDY="${NRC_STUDY:-/export/scratch/$USER/negative-response-conventions}"
+source "$STUDY/hpc/job-common.sh"
 
-STUDY=/export/scratch/$USER/negative-response-conventions
-cd "$STUDY"; mkdir -p logs
-export NRC_STAN_CACHE="$STUDY/cmdstan_cache"
+STAMP="$LIB/.installed"
 
-singularity exec -B "$STUDY":"$STUDY" --pwd "$STUDY" \
-  --env NRC_STAN_CACHE="$NRC_STAN_CACHE" \
-  "$STUDY/negative-response-conventions.sif" \
-  Rscript analysis/run_unit.R "$SLURM_ARRAY_TASK_ID" 100
+if [ "${SLURM_ARRAY_TASK_ID:-1}" -eq 1 ]; then
+  echo "=== $(date -Is) installing bayesnec from $SRC"
+  [ -d "$SRC" ] || { echo "no bayesnec source at $SRC; deploy it first" >&2; exit 1; }
+  rm -rf "$LIB"; mkdir -p "$LIB"
+  singularity exec -B "$STUDY":"$STUDY" --pwd "$SRC" "${RENV[@]}" "$SIF" \
+    R CMD INSTALL --library="$LIB" . \
+    || { echo "R CMD INSTALL failed. If a dependency is missing, the image" >&2
+         echo "needs rebuilding in the bayesnec repository." >&2; exit 1; }
+  nrc_check_bayesnec
+  # Written last, so a task that sees it knows the install finished rather than
+  # merely started.
+  { sed -n 's/^commit: //p' "$STUDY/hpc/bayesnec.lock"; date -Is; } > "$STAMP"
+else
+  # Wait for task 1. Up to 30 minutes: an install that has not finished by then
+  # has failed, and the dependency on this array will stop the main one.
+  for _ in $(seq 1 180); do
+    [ -f "$STAMP" ] && break
+    sleep 10
+  done
+  [ -f "$STAMP" ] || { echo "bayesnec was not installed within 30 min" >&2; exit 1; }
+fi
+
+echo "=== $(date -Is) warm-up unit ${SLURM_ARRAY_TASK_ID:-1} on $(hostname)"
+nrc_r analysis/run_unit.R "${SLURM_ARRAY_TASK_ID:-1}" 100

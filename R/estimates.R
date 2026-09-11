@@ -46,9 +46,61 @@ arm_weights <- function(fit) {
     top_model = names(w)[which.max(w)],
     top_weight = unname(max(w)),
     w_nec4param = unname(if ("nec4param" %in% names(w)) w[["nec4param"]] else 0),
+    # The six equations whose lower asymptote is fixed at zero. Their combined
+    # weight is the signature of the substitution, and it identifies it only
+    # where the substitution is what imposes the boundary: under a Beta or a
+    # Gamma the family already forbids a negative mean, so an equation with a
+    # free lower asymptote is bounded below in any case and these six are not
+    # needed. Reported for every arm so that asymmetry is visible rather than
+    # assumed.
+    w_zero_asymptote = sum(w[names(w) %in% ZERO_ASYMPTOTE]),
     weights = I(list(w)),
     stringsAsFactors = FALSE
   )
+}
+
+## The equations that hold the lower asymptote at zero.
+ZERO_ASYMPTOTE <- c("nec3param", "ecxexp", "ecxsigm", "ecxwb1p3", "ecxwb2p3",
+                    "ecxll3")
+
+#' Per-equation convergence diagnostics, with the weight each equation holds
+#'
+#' Reported together because that is the only way to read them: an equation
+#' whose shape suits the data badly fails a diagnostic whatever the data are
+#' doing, and is given almost no stacking weight for the same reason, so a
+#' failure on a near-zero-weight equation says something about that curve and
+#' nothing about the model-averaged estimates. Measured on one real dataset
+#' during the rewrite, `nec3param` had a tail ESS of 148 and a weight of
+#' 1.3e-15.
+#'
+#' Returns one row per equation. `max_rhat` and `min_ess_tail` are taken over
+#' the curve parameters only -- `top`, `bot`, `nec`, `beta`, `ec50` -- because a
+#' dispersion parameter mixing badly is a different problem from a curve that is
+#' not identified.
+arm_diagnostics <- function(fit) {
+  if (!requireNamespace("posterior", quietly = TRUE)) {
+    return(NULL)
+  }
+  fits <- if (inherits(fit, "bayesmanecfit")) fit$mod_fits else
+    setNames(list(fit), fit$model)
+  w <- if (inherits(fit, "bayesmanecfit")) {
+    setNames(fit$mod_stats$wi, rownames(fit$mod_stats))
+  } else {
+    setNames(1, fit$model)
+  }
+  do.call(rbind, lapply(names(fits), function(m) {
+    bf <- if (inherits(fit, "bayesmanecfit")) fits[[m]]$fit else fits[[m]]$fit
+    d <- try(posterior::as_draws_df(bf), silent = TRUE)
+    if (inherits(d, "try-error")) return(NULL)
+    keep <- grep("^b_(top|bot|nec|beta|ec50)_", names(d))
+    if (!length(keep)) return(NULL)
+    s <- posterior::summarise_draws(d[, keep, drop = FALSE], "rhat", "ess_tail")
+    data.frame(model = m,
+               weight = unname(if (m %in% names(w)) w[[m]] else 0),
+               max_rhat = max(s$rhat, na.rm = TRUE),
+               min_ess_tail = min(s$ess_tail, na.rm = TRUE),
+               stringsAsFactors = FALSE)
+  }))
 }
 
 #' The fixed prior for one cell and arm
@@ -76,10 +128,17 @@ run_one <- function(cl, iteration, arm, prior_dir = "priors") {
   res <- fit_arm(dat, arm, seed = 333L + iteration, disp = cl$disp, prior = pr)
   rec <- res$record
   out <- list(cell = cl$cell, iteration = iteration, arm = arm,
-              record = rec, estimates = NULL, weights = NULL)
+              record = rec, estimates = NULL, weights = NULL,
+              diagnostics = NULL)
   if (is.null(res$fit)) return(out)
   out$estimates <- arm_estimates(res$fit)
   out$weights <- try(arm_weights(res$fit), silent = TRUE)
   if (inherits(out$weights, "try-error")) out$weights <- NULL
+  # Carried for the same reason the case studies carry it: a diagnostic is only
+  # readable against the weight its equation holds, and the previous run of this
+  # study recorded no diagnostics at all, so there was nothing to check when the
+  # question was asked.
+  out$diagnostics <- try(arm_diagnostics(res$fit), silent = TRUE)
+  if (inherits(out$diagnostics, "try-error")) out$diagnostics <- NULL
   out
 }
