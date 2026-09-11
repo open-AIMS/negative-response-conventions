@@ -9,3 +9,4 @@ results/*/
 analysis/report_files/
 *.log
 hpc/local.conf
+.bayesnec-src/

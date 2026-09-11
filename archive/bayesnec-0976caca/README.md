@@ -23,5 +23,10 @@ every fit:
   band the curve on level means, which changes the starting values of every fit
   in the study.
 
-The per-unit `.rds` files were not retained: at 4,200 units they are large, and
-the metrics tables here are what the vignette and the report quoted.
+`report.html` is the rendered report as it stood against that commit, kept for
+the same reason as the tables.
+
+The per-unit `.rds` files are not here: at 4,200 units they are large. They were
+moved aside on the cluster rather than deleted, into a `superseded-<timestamp>/`
+directory in the job directory, so they can still be recovered if a figure needs
+checking against the units behind it.

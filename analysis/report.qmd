@@ -14,7 +14,23 @@ execute:
 
 ```{r setup}
 library(ggplot2); library(dplyr); library(tidyr)
-m <- read.csv(here::here("results", "metrics_100iter.csv"))
+
+# Everything the report draws comes from the tables analysis/collate.R writes,
+# so a refresh changes the numbers without touching prose. Each is optional:
+# the 24 case units finish long before the 4,200 simulation units, so the report
+# has to render on whichever half exists rather than failing on the other.
+read_if <- function(...) {
+  f <- here::here("results", ...)
+  if (file.exists(f)) read.csv(f) else NULL
+}
+m          <- read_if("metrics.csv")
+weights    <- read_if("weights.csv")
+diagnostics <- read_if("diagnostics.csv")
+cases      <- read_if("case_estimates.csv")
+case_diag  <- read_if("case_diagnostics.csv")
+have_sim   <- !is.null(m)
+have_cases <- !is.null(cases)
+if (!have_sim && !have_cases) stop("no collated results; run analysis/collate.R")
 
 ARMS <- c("measured", "censored", "deleted", "floored", "beta", "gamma")
 # Hue order validated for colour-vision separation as a categorical set: every
@@ -22,13 +38,47 @@ ARMS <- c("measured", "censored", "deleted", "floored", "beta", "gamma")
 # Reordering the arms means revalidating, because the check is on adjacent pairs.
 ARM_COL <- c(measured = "#1B6BC4", censored = "#0E7C61", deleted  = "#C25E12",
              floored  = "#B0217A", beta     = "#7C7A00", gamma    = "#6B4EBF")
-m$arm <- factor(m$arm, levels = ARMS)
-m$estimate <- factor(m$estimate, levels = c("ErC10", "ErC50", "NSEC"))
+EST <- c("ErC10", "ErC50", "NSEC")
+if (have_sim) {
+  m$arm <- factor(m$arm, levels = ARMS)
+  m$estimate <- factor(m$estimate, levels = EST)
+  prec <- m |>
+    filter(cell %in% c("p1", "p2", "p3", "p4")) |>
+    mutate(cv = factor(sprintf("%.1f", 100 * cv_control),
+                       levels = c("9.6", "6.7", "2.8", "1.9")))
+}
+if (have_cases) {
+  cases$arm <- factor(cases$arm, levels = ARMS)
+  cases$estimate <- factor(cases$estimate, levels = EST)
+}
 
-prec <- m |>
-  filter(cell %in% c("p1", "p2", "p3", "p4")) |>
-  mutate(cv = factor(sprintf("%.1f", 100 * cv_control),
-                     levels = c("9.6", "6.7", "2.8", "1.9")))
+# Read a figure out of the table rather than typing it into the prose, so a
+# re-run cannot leave the text describing an earlier one. The previous version
+# of this report had every number in "What the study establishes" typed by hand,
+# and every one of them was superseded by the re-run.
+val <- function(a, est, cl, what = "rel_bias") {
+  if (!have_sim) return(NA_real_)
+  m[[what]][m$arm == a & m$estimate == est & m$cell == cl]
+}
+# An em-dash rather than "NA" where the half this figure comes from has not been
+# collated yet, so a report rendered mid-run reads as incomplete rather than
+# broken.
+f1 <- function(x) {
+  if (!length(x) || any(is.na(x))) return("\u2014")
+  sub("^-0\\.0$", "0.0", sprintf("%.1f", x))
+}
+f2 <- function(x) {
+  if (!length(x) || any(is.na(x))) return("\u2014")
+  sprintf("%.2f", x)
+}
+# The spread between the four Gaussian conventions in one cell, in percentage
+# points: what a reader deciding whether the choice matters actually needs.
+GAUSS <- c("measured", "censored", "deleted", "floored")
+spread <- function(est, cl) {
+  if (!have_sim) return(NA_real_)
+  v <- vapply(GAUSS, val, numeric(1), est, cl)
+  max(v) - min(v)
+}
 
 # One label per series at the right-hand edge instead of a key: six hues in a
 # legend are harder to match to lines than a label sitting on the line it names.
@@ -76,12 +126,21 @@ The true values are known by construction, so each analysis is scored against
 them rather than against each other. We report relative bias, the proportion of
 95% credible intervals containing the truth, and the mean interval width.
 
+Four real datasets are analysed by the same six conventions as well. They have
+no known truth, so they are not scored; what they show is how far the choice
+changes the number that would be reported on data nobody simulated.
+
+Everything here comes from one pinned commit of `bayesnec`, and the results it
+replaces came from another. The Provenance section says which, and what changed
+between them.
+
 ## Estimating ErC50
 
 The concentration halving the growth rate separates the conventions cleanly, and
 it separates them by whether the measurement is kept.
 
 ```{r fig-erc50-bias, fig.height=4.2}
+#| eval: !expr have_sim
 d <- filter(prec, estimate == "ErC50")
 ggplot(d, aes(cv, rel_bias, colour = arm, group = arm)) +
   geom_hline(yintercept = 0, linetype = "dashed", colour = "grey45") +
@@ -116,6 +175,7 @@ other arm's and its ErC10 is badly displaced, as the next section shows.
 ## Estimating ErC10
 
 ```{r fig-erc10-bias, fig.height=4.2}
+#| eval: !expr have_sim
 d <- filter(prec, estimate == "ErC10")
 ggplot(d, aes(cv, rel_bias, colour = arm, group = arm)) +
   geom_hline(yintercept = 0, linetype = "dashed", colour = "grey45") +
@@ -149,6 +209,7 @@ The no-significant-effect concentration is where the conventions diverge most,
 and where they diverge in a direction that matters for protection.
 
 ```{r fig-nsec-bias, fig.height=4.2}
+#| eval: !expr have_sim
 d <- filter(prec, estimate == "NSEC")
 ggplot(d, aes(cv, rel_bias, colour = arm, group = arm)) +
   geom_hline(yintercept = 0, linetype = "dashed", colour = "grey45") +
@@ -188,6 +249,7 @@ Bias understates the problem, because the intervals narrow around a displaced
 centre as the experiment improves.
 
 ```{r fig-coverage, fig.height=4.2}
+#| eval: !expr have_sim
 d <- filter(prec, estimate == "ErC50")
 ggplot(d, aes(cv, coverage, colour = arm, group = arm)) +
   geom_hline(yintercept = 0.95, linetype = "dashed", colour = "grey45") +
@@ -207,6 +269,7 @@ is nominal coverage. Monte Carlo standard error is about 1.5 percentage points
 at 100 iterations.
 
 ```{r tab-coverage}
+#| eval: !expr have_sim
 m |>
   filter(estimate == "ErC50", cell %in% c("p1", "p4")) |>
   mutate(cell = ifelse(cell == "p1", "CV 9.6%", "CV 1.9%")) |>
@@ -234,6 +297,7 @@ recalled. Either statistic alone identifies the wrong arm as the best one.
 ## Where the response barely goes negative
 
 ```{r tab-ctl}
+#| eval: !expr have_sim
 m |>
   filter(cell == "ctl", estimate %in% c("ErC50", "NSEC")) |>
   select(estimate, arm, rel_bias, coverage) |>
@@ -253,54 +317,199 @@ This is the condition under which none of the results above apply. Reporting the
 proportion of observations at or below zero is what tells a reader which
 situation they are in.
 
+## Convergence, read against model weight
+
+Every fit records `rhat` and the tail effective sample size for the curve
+parameters of each equation in its candidate set, beside the stacking weight
+that equation holds. The two are only readable together. An equation whose shape
+suits the data badly fails a diagnostic whatever the data are doing, and is
+given almost no weight for the same reason, so a failure on a near-zero-weight
+equation describes that curve rather than the model-averaged estimate.
+
+```{r tab-diagnostics}
+#| eval: !expr (!is.null(diagnostics))
+diagnostics |>
+  group_by(cell, arm) |>
+  summarise(w_rhat = mean(tapply(weight * (max_rhat > 1.01),
+                                 interaction(iteration), sum)),
+            w_ess  = mean(tapply(weight * (min_ess_tail < 400),
+                                 interaction(iteration), sum)),
+            .groups = "drop") |>
+  arrange(desc(w_rhat + w_ess)) |>
+  head(12) |>
+  knitr::kable(digits = 3,
+    col.names = c("cell", "arm", "weight on rhat > 1.01",
+                  "weight on tail ESS < 400"),
+    caption = "**Table 4.** Mean stacking weight held by equations that fail a convergence diagnostic, by cell and arm, over the realisations of that cell. Twelve worst shown. A row near zero means the diagnostics that failed were on equations the average barely used.")
+```
+
+The previous run of this study recorded no diagnostics at all, so when the
+question arose of whether a badly mixing equation had affected an estimate there
+was nothing on disk to answer it with. That is why they are collected here.
+
+## The case studies
+
+Four marine microalgal growth tests were analysed by the same six conventions,
+from the `alga` data that ship with `bayesnec`: two tests on *Cladocopium
+proliferum* over seven days and two on *Rhodomonas salina* over three, each
+species against two contaminants on undisclosed and mutually incomparable
+concentration scales.
+
+They are run here rather than when the vignette is built. Four datasets by six
+conventions, each averaged over thirteen or fourteen equations, is a fifteen-hour
+build, which is not something to run on a workstation whenever a sentence
+changes. What that costs is stated rather than hidden: the case-study estimates
+no longer track whatever version of `bayesnec` they are published beside. They
+report the commit named in `hpc/bayesnec.lock`, exactly as the simulation does.
+
+The two *Rhodomonas* tests need one qualification before their results are read.
+At the highest concentrations the population fell below the counting limit of 10
+cells per mL, so the growth rate is undefined rather than negative. Every
+convention must therefore substitute something there, including the ones that
+otherwise retain the measurement, and on those two datasets no convention is a
+true analysis of what was measured. Censoring is the exception in kind rather
+than in degree: it can state that the value lies at or below the rate the
+counting limit implies without inventing one.
+
+```{r tab-cases}
+#| eval: !expr have_cases
+cases |>
+  filter(estimate == "ErC50") |>
+  select(dataset, arm, value, lower, upper, top_model, top_weight,
+         w_zero_asymptote) |>
+  arrange(dataset, arm) |>
+  knitr::kable(digits = c(0, 0, 3, 3, 3, 0, 2, 2),
+    col.names = c("dataset", "arm", "ErC50", "lower", "upper",
+                  "highest-weighted", "its weight", "weight on zero-asymptote"),
+    caption = "**Table 5.** ErC50 from each convention on each dataset, with the equation the average leaned on most and the combined weight on the six equations whose lower asymptote is fixed at zero. There is no truth to score these against; what they show is how far the choice of convention changes the number that would be reported.")
+```
+
+```{r fig-case-ratio, fig.height=5}
+#| eval: !expr have_cases
+# Ratios rather than values: the four tests are on undisclosed and mutually
+# incomparable concentration scales, so only the within-dataset comparison
+# means anything.
+cr <- cases |>
+  group_by(dataset, estimate) |>
+  mutate(ref = value[arm == "measured"],
+         r = value / ref, rlo = lower / ref, rhi = upper / ref) |>
+  ungroup()
+ggplot(cr, aes(x = r, y = arm, colour = arm)) +
+  geom_vline(xintercept = 1, linetype = "dashed", colour = "grey40") +
+  geom_errorbar(aes(xmin = rlo, xmax = rhi), orientation = "y",
+                width = 0, linewidth = 0.6) +
+  geom_point(size = 2.2) +
+  scale_y_discrete(limits = rev(ARMS)) +
+  scale_x_log10() +
+  facet_grid(estimate ~ dataset) +
+  scale_colour_manual(values = ARM_COL, guide = "none") +
+  labs(x = "estimate as a ratio to the `measured` analysis (log scale)",
+       y = NULL) +
+  theme_classic(base_size = 9) +
+  theme(strip.background = element_blank())
+```
+
 ## What the study establishes
 
-The measurement should be kept. `measured` is unbiased to within one per cent on
-ErC50 at every level of precision tested, converges on the truth for all three
-estimates, and holds nominal coverage.
+The measurement should be kept. Across the precision axis `measured` recovers
+the true ErC50 to within `r f1(max(abs(vapply(c("p1","p2","p3","p4"), function(cl) val("measured","ErC50",cl), numeric(1)))))`%,
+and at the highest precision tested its interval contains the truth in
+`r f2(val("measured","ErC50","p4","coverage"))` of realisations.
 
 Where the negative values were never recorded, censoring recovers almost all of
-what replacing them loses: `censored` tracks `measured` to within about half a
-percentage point on ErC50 across the precision axis.
+what replacing them loses: at the highest precision `censored` reports an ErC50
+bias of `r f1(val("censored","ErC50","p4"))`% against
+`r f1(val("measured","ErC50","p4"))`% for the measurements themselves.
 
-Deleting the negative rows is better than replacing them with zero but worse
-than either alternative above, and it discards information that censoring
-retains.
+Deleting the negative rows is better than replacing them with zero and worse
+than either alternative above. It discards information that censoring retains,
+and it changes the replication per concentration rather than the values, which
+at the top of a series can remove a treatment group altogether.
 
-Replacing negative values with zero biases ErC50 low, places the NSEC two to
-three times too low at high precision, and drives interval coverage to 0.24. The
-error does not shrink as the experiment improves.
+Replacing negative values with zero leaves an ErC50 bias of
+`r f1(val("floored","ErC50","p4"))`% at the highest precision that does not
+shrink as the experiment improves, so interval coverage falls to
+`r f2(val("floored","ErC50","p4","coverage"))`, and it displaces the NSEC by
+`r f1(val("floored","NSEC","p4"))`%.
 
 Imposing the boundary through the response distribution is the same practice
-reached by a different route, and it performs no better: `beta` carries the
-largest ErC50 bias in the study and `gamma` displaces ErC10 by about 20% at
-every level of precision while producing the widest intervals of any arm.
+reached by a different route and performs no better. `beta` holds an ErC50 bias
+of `r f1(val("beta","ErC50","p4"))`% at the highest precision;
+`gamma` is close to unbiased on ErC50 and displaces ErC10 by
+`r f1(val("gamma","ErC10","p4"))`%, with coverage of
+`r f2(val("gamma","ErC10","p4","coverage"))`, so the two estimates cannot be
+summarised together for that convention.
+
+Where the design does not reach the zero-growth boundary none of this applies:
+in the `ctl` cell the four Gaussian conventions span
+`r f1(spread("ErC50","ctl"))` percentage points of ErC50 bias between them,
+against `r f1(spread("ErC50","p1"))` in `p1`, which has the same control
+variability and four times as many negative observations.
 
 ## Provenance
 
-The study is 4,200 model-averaged fits: seven cells, six arms, 100 iterations,
-each fit averaging over the declining candidate set for its family. It ran on
-the AIMS HPC as a SLURM array, one unit per task, with zero failures. Peak
-memory was 1.93 GB per unit and the mean unit took 936 seconds.
+The study is 4,200 model-averaged fits for the simulation — seven cells, six
+conventions, 100 realisations — and 24 for the case studies, each fit averaging
+over the declining candidate set its family allows. It ran on the AIMS HPC as
+SLURM arrays, one unit per task.
 
-`bayesnec` was pinned at commit `0976caca`, version 2.1.3.33, from the `dev`
-branch. That is not the CRAN release: the current CRAN version is 2.1.3.1, which
-does not include the change peaking the `nec` and `ec50` gamma prior at the
-median predictor rather than at twice it. The priors are therefore a development
-default rather than a released one, and the exact values used are committed as
-42 files in `priors/`, one per cell and arm.
+`bayesnec` is pinned at the commit named in `hpc/bayesnec.lock`, on the `dev`
+branch. That is a development commit rather than a CRAN release, and the
+difference matters here more than it usually would, because what this study
+measures is what package defaults do.
 
-Those priors are held fixed within a cell and arm rather than being derived from
-each realisation. `bayesnec` derives its defaults from the response vector and
-`brms` writes them into the Stan source as literals, so a prior that varies by
-realisation makes every fit a distinct Stan program: 5,622 compiles for 406
+This is a re-run. The previous results, produced at `0976caca`, are kept under
+`archive/bayesnec-0976caca/` and cannot be pooled with these. Three changes
+between the two alter every fit:
+
+- the `nec` and `ec50` priors are now built on the log of the predictor, so
+  their central 95% interval covers the concentrations tested rather than a
+  fraction of them. On the reference cell the `nec` prior went from
+  `gamma(5, 2.666)` to `lognormal(0.615, 1.175)`, which moves the true ErC50
+  from above the 99th percentile of its own prior to the 80th;
+- the regularizing prior set was redefined and anchored on the predictor. This
+  study uses the default `uninformative` set, so that changes nothing here
+  directly and is named because it is part of the same release;
+- the initial-value search was rewritten to accept chains individually and to
+  band the curve on level means, which changes the starting values of every fit.
+
+The container holds the toolchain and not the package: it is the image built by
+the `bayesnec` repository for precompiling its vignettes, and the job installs
+`bayesnec` from the pinned source at start-up. `hpc/image.lock` records which
+image produced these results and every job refuses to run against one whose
+SHA does not match it. Rebuilding the image is a change that can alter published
+numbers, so it is made deliberately rather than discovered afterwards.
+
+The simulation's priors are held fixed within a cell and arm rather than derived
+from each realisation. `bayesnec` derives its defaults from the response vector
+and `brms` writes them into the Stan source as literals, so a prior that varies
+by realisation makes every fit a distinct Stan program: 5,622 compiles for 406
 units before this was changed. Fixing them makes the program identical across
-iterations. The predictor range is identical across realisations within a cell
-and arm, so the hard parameter bounds do not vary at all; only the
-response-derived scales would have, by a few per cent. Each arm keeps its own
-prior, derived from its own prepared data, so the contrast between arms is
-unaffected.
+iterations. Each arm keeps its own prior, derived from its own prepared data, so
+the contrast between arms is unaffected, and the exact values used are committed
+as 42 files in `priors/`.
+
+The case studies take `bnec()`'s own defaults instead. Each dataset and arm is
+fitted once, so there is no repetition for an identical program to save, and
+taking the defaults is the practice they exist to show.
 
 The generating model is carried over verbatim from
 [open-AIMS/negative-sgr](https://github.com/open-AIMS/negative-sgr) at commit
 `0181d66e`. Nothing else is.
+
+```{r tab-provenance}
+lock <- readLines(here::here("hpc", "bayesnec.lock"))
+img <- readLines(here::here("hpc", "image.lock"))
+get1 <- function(x, k) sub(paste0("^", k, ": "), "",
+                           grep(paste0("^", k, ": "), x, value = TRUE)[1])
+knitr::kable(
+  data.frame(
+    item = c("bayesnec commit", "bayesnec version", "branch",
+             "base image", "R", "cmdstan", "CRAN snapshot", "image sha256"),
+    value = c(get1(lock, "commit"), get1(lock, "version"), get1(lock, "branch"),
+              get1(img, "base_image"), get1(img, "r_version"),
+              get1(img, "cmdstan"), get1(img, "repos"),
+              substr(get1(img, "sif_sha256"), 1, 16)),
+    check.names = FALSE),
+  caption = "**Table 6.** What produced these numbers, read from the two lock files rather than typed.")
+```
