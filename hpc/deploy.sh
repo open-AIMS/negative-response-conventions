@@ -23,6 +23,56 @@ SIF_NAME="bayesnec-precompile.sif"
 COMMIT=$(sed -n 's/^commit: //p' hpc/bayesnec.lock)
 [ -n "$COMMIT" ] || { echo "no commit in hpc/bayesnec.lock" >&2; exit 1; }
 
+FRESH=no
+ARGS=()
+for a in "$@"; do
+  case "$a" in
+    --fresh) FRESH=yes ;;
+    *) ARGS+=("$a") ;;
+  esac
+done
+set -- "${ARGS[@]:-}"
+
+# Results already on the cluster are the trap this guards. Both runners skip a
+# unit whose result file exists, which is what makes a resubmitted array cheap;
+# it also means results produced by a different bayesnec would be silently
+# adopted as this run's. The job directory records which commit produced what is
+# in it, and a mismatch stops the deployment rather than mixing the two.
+REMOTE_COMMIT=$(ssh "$HOST" "sed -n 's/^bayesnec_commit: //p' $DEST/PROVENANCE 2>/dev/null" || true)
+REMOTE_RESULTS=$(ssh "$HOST" "find $DEST/results $DEST/results_cases -name '*.rds' 2>/dev/null | wc -l" || echo 0)
+if [ "$REMOTE_RESULTS" -gt 0 ] && [ "$REMOTE_COMMIT" != "$COMMIT" ]; then
+  if [ "$FRESH" != "yes" ]; then
+    cat >&2 <<TXT
+$DEST holds $REMOTE_RESULTS result files produced by
+  ${REMOTE_COMMIT:-an unrecorded commit}
+and this deployment pins
+  $COMMIT
+
+Both runners skip a unit whose result file exists, so submitting now would adopt
+those as though they belonged to this run. Archive them, or re-run with --fresh
+to delete them on the cluster:
+
+  ./hpc/deploy.sh --fresh
+TXT
+    exit 1
+  fi
+  # Moved aside, not deleted. These are the only copy of the per-unit records
+  # from the previous run -- the archived tables are summaries of them -- and at
+  # 107MB against 735TB free there is nothing to gain by removing them. The
+  # retired image and the stale library do go, because neither is a record.
+  STAMP="superseded-$(date +%Y%m%d-%H%M%S)"
+  echo "==> --fresh: moving $REMOTE_RESULTS result files aside into $STAMP/"
+  ssh "$HOST" "set -e
+    mkdir -p $DEST/$STAMP
+    for d in results results_cases; do
+      [ -d $DEST/\$d ] && mv $DEST/\$d $DEST/$STAMP/\$d || true
+    done
+    [ -f $DEST/PROVENANCE ] && mv $DEST/PROVENANCE $DEST/$STAMP/ || true
+    rm -rf $DEST/lib $DEST/negative-response-conventions.sif
+    printf 'moved aside by deploy.sh on %s, superseded by bayesnec %s\n' \
+      '$(date -Is)' '$COMMIT' > $DEST/$STAMP/README"
+fi
+
 # The image belongs to bayesnec and is built there. This repository commits a
 # copy of its lock file so that the results record which image produced them,
 # and the two must agree or the pair has drifted.
@@ -60,6 +110,10 @@ rsync -a --delete-excluded \
   --exclude '*.log' --exclude 'hpc/local.conf' --exclude '.bayesnec-src' \
   ./ "$HOST:$DEST/"
 
+echo "==> recording provenance"
+ssh "$HOST" "printf 'bayesnec_commit: %s\nimage_sha256: %s\ndeployed: %s\n' \
+  '$COMMIT' '$(sed -n 's/^sif_sha256: //p' hpc/image.lock)' '$(date -Is)' > $DEST/PROVENANCE"
+
 echo "==> syncing the pinned bayesnec source"
 rsync -a --delete .bayesnec-src/ "$HOST:$DEST/bayesnec-src/"
 
@@ -67,6 +121,18 @@ rsync -a --delete .bayesnec-src/ "$HOST:$DEST/bayesnec-src/"
 # the cluster does not already hold the one hpc/image.lock records.
 WANT=$(sed -n 's/^sif_sha256: //p' hpc/image.lock)
 HAVE=$(ssh "$HOST" "sha256sum $DEST/$SIF_NAME 2>/dev/null | cut -d' ' -f1" || true)
+# Before uploading 700MB, look for the image the cluster may already hold from a
+# bayesnec precompile run. A copy within scratch is seconds; the upload is not.
+if [ "$WANT" != "$HAVE" ]; then
+  FOUND=$(ssh "$HOST" "for f in \$(find /export/scratch/\$USER -maxdepth 3 -name '$SIF_NAME' 2>/dev/null); do
+             if [ \"\$(sha256sum \$f | cut -d' ' -f1)\" = '$WANT' ]; then echo \$f; break; fi
+           done" || true)
+  if [ -n "$FOUND" ]; then
+    echo "==> the cluster already holds a matching image; copying it within scratch"
+    ssh "$HOST" "cp '$FOUND' $DEST/$SIF_NAME"
+    HAVE="$WANT"
+  fi
+fi
 if [ "$WANT" != "$HAVE" ]; then
   : "${SIF:?the cluster does not hold the right image; set SIF in hpc/local.conf to a local copy}"
   [ -f "$SIF" ] || { echo "no image at $SIF. Build it in the bayesnec repository: ./hpc/build.sh" >&2; exit 1; }
