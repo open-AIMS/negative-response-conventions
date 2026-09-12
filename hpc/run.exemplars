@@ -16,6 +16,9 @@
 # of the result, so it neither redoes nor disturbs anything already collated.
 # The compile cache is warm by then, so most of each task is sampling.
 
+# NOTE: SLURM creates the --output file before this script runs, so logs/ must
+# exist at submission time. hpc/submit.sh makes it; a bare sbatch of this file
+# does not, and the task then fails in one second with no log to say why.
 set -euo pipefail
 STUDY="${NRC_STUDY:-/export/scratch/$USER/negative-response-conventions}"
 source "$STUDY/hpc/job-common.sh"

@@ -101,17 +101,29 @@ grep -q "^Version: $(sed -n 's/^version: //p' hpc/bayesnec.lock)$" .bayesnec-src
   echo "the exported source is not the version hpc/bayesnec.lock records" >&2; exit 1; }
 
 echo "==> creating $DEST on $HOST"
-ssh "$HOST" "mkdir -p $DEST/logs"
+ssh "$HOST" "mkdir -p $DEST"
 
 # priors/ is NOT excluded and must not be: those 42 files are what keep the Stan
 # programs identical across iterations, which is what makes the study
 # affordable. lib/ is excluded because the job builds it from the source below.
+#
+# --delete-excluded also removes receiver files that the sender does not have,
+# so everything the cluster owns and this machine does not has to be named here
+# or it is deleted. That is how logs/ was removed on 2026-09-12, after which
+# every array task failed in one second: SLURM could not create its output file
+# and died before the job script ran. results/, fits/ and logs/ are the
+# cluster's, not this machine's.
 echo "==> syncing code, priors and R/"
 rsync -a --delete-excluded \
   --exclude lib --exclude cmdstan_cache --exclude superceded \
-  --exclude results --exclude results_cases --exclude '*.sif' --exclude '.git' \
+  --exclude results --exclude results_cases --exclude fits --exclude fits_cases \
+  --exclude logs --exclude 'superseded-*' \
+  --exclude '*.sif' --exclude '.git' \
   --exclude '*.log' --exclude 'hpc/local.conf' --exclude '.bayesnec-src' \
   ./ "$HOST:$DEST/"
+
+# After the sync, not before: the rsync above would delete it.
+ssh "$HOST" "mkdir -p $DEST/logs"
 
 echo "==> recording provenance"
 ssh "$HOST" "printf 'bayesnec_commit: %s\nimage_sha256: %s\ndeployed: %s\n' \
