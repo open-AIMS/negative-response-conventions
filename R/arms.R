@@ -145,17 +145,23 @@ prepare_arm <- function(dat, arm) {
 #'   iterations. See the note below on why.
 fit_arm <- function(dat, arm, seed = 1L, iter = 4000, warmup = 2000,
                     adapt_delta = 0.99, max_treedepth = 12,
-                    disp = c("none", "loglinear"), prior = NULL) {
+                    disp = c("none", "loglinear", "power"), prior = NULL) {
   disp <- match.arg(disp)
   if (is.null(getOption("cmdstanr_write_stan_file_dir"))) {
     stop("set options(cmdstanr_write_stan_file_dir = ...) before fitting; ",
          "without it every model recompiles per session")
   }
   prep <- prepare_arm(dat, arm)
-  if (identical(disp, "loglinear")) {
-    # disp("power") is refused for a response whose fitted mean crosses zero,
-    # which is exactly this case, so "loglinear" is the only form available.
-    prep$formula <- stats::update(prep$formula, . ~ . + disp("loglinear"))
+  if (!identical(disp, "none")) {
+    # disp("power") models the dispersion as a power function of the fitted
+    # mean, which is the right shape for the question a Gamma raises here --
+    # the Gamma's failure IS that it forces an exponent of one. It is refused
+    # for a response whose fitted mean crosses zero, because a power law in mu
+    # is undefined there, so it is available to the bounded families and not to
+    # a Gaussian fitted on the measurements.
+    prep$formula <- stats::update(prep$formula,
+                                  stats::as.formula(sprintf(". ~ . + disp(\"%s\")",
+                                                            disp)))
   }
   if (!prep$record$estimable) {
     return(list(fit = NULL, record = prep$record))

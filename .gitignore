@@ -19,3 +19,4 @@ hpc/local.conf
 # on demand with hpc/fetch-fits.sh rather than tracked.
 fits/
 fits_cases/
+fits_disp/

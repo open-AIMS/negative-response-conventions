@@ -1,0 +1,23 @@
+#!/bin/bash
+#SBATCH --job-name=nrc-disp
+#SBATCH --partition=cpuq
+#SBATCH --array=1-5
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=12GB
+#SBATCH --time=08:00:00
+#SBATCH --output=logs/nrc-disp-%A_%a.log
+
+# Whether a dispersion sub-model mitigates what a bounded family does to the
+# variance on data that have already been floored. Five fits on one cell; see
+# analysis/run_disp.R for the scope and issue #283 for the full treatment.
+#
+# Longer wall-clock than the other arrays: every Stan program here is new, since
+# a disp() term changes the source, so none of the study's compile cache applies.
+
+set -euo pipefail
+STUDY="${NRC_STUDY:-/export/scratch/$USER/negative-response-conventions}"
+source "$STUDY/hpc/job-common.sh"
+[ -f "$LIB/.installed" ] || { echo "bayesnec not installed; run hpc/run.warmup" >&2; exit 1; }
+nrc_r analysis/run_disp.R "$SLURM_ARRAY_TASK_ID"
