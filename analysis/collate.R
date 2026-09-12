@@ -145,6 +145,56 @@ if (have_sim) {
   }
 }
 
+## The dispersion sweep, scored against the same truth as the study, so the two
+## tables stack. Kept in its own file rather than merged: these arms exist on
+## four cells only, and a metrics table with empty rows for the other three
+## invites the two to be read as one design.
+disp_files <- list.files(file.path(ROOT, "results_disp"), "^iter_\\d+\\.rds$",
+                         recursive = TRUE, full.names = TRUE)
+if (length(disp_files)) {
+  cat("\ncollating", length(disp_files), "dispersion-sweep files\n")
+  draw <- do.call(rbind, lapply(disp_files, function(f) {
+    o <- readRDS(f)
+    if (is.null(o$estimates)) return(NULL)
+    cbind(data.frame(cell = o$cell, arm = o$arm, iteration = o$iteration,
+                     stringsAsFactors = FALSE), o$estimates)
+  }))
+  truth_d <- do.call(rbind, lapply(disp_cells(), function(cc) {
+    tv <- cell_truth(cells()[cells()$cell == cc, ])$true_values
+    data.frame(cell = cc, estimate = names(tv), truth = unname(tv),
+               stringsAsFactors = FALSE)
+  }))
+  draw <- merge(draw, truth_d, by = c("cell", "estimate"), all.x = TRUE)
+  md <- do.call(rbind, lapply(split(draw, list(draw$cell, draw$arm, draw$estimate),
+                                    drop = TRUE), function(g) {
+    ok <- !is.na(g$value); v <- g$value[ok]; tr <- g$truth[1]
+    cov_ok <- !is.na(g$lower) & !is.na(g$upper)
+    cover <- mean(g$lower[cov_ok] <= tr & g$upper[cov_ok] >= tr)
+    data.frame(cell = g$cell[1], arm = g$arm[1], estimate = g$estimate[1],
+               truth = tr, n_run = nrow(g), n_used = sum(ok),
+               rel_bias = 100 * (mean(v) - tr) / tr,
+               rmse = sqrt(mean((v - tr)^2)),
+               coverage = cover, width = mean(g$upper[cov_ok] - g$lower[cov_ok]),
+               stringsAsFactors = FALSE)
+  }))
+  md <- merge(md, cells()[, c("cell", "cv_control")], by = "cell")
+  md <- md[order(md$estimate, md$cell, md$arm), ]
+  mdf <- file.path(dirname(outfile), "metrics_disp.csv")
+  utils::write.csv(md, mdf, row.names = FALSE)
+  cat("wrote", mdf, "with", nrow(md), "rows\n")
+  dd <- do.call(rbind, lapply(disp_files, function(f) {
+    o <- readRDS(f)
+    if (is.null(o$diagnostics)) return(NULL)
+    cbind(data.frame(cell = o$cell, arm = o$arm, iteration = o$iteration,
+                     stringsAsFactors = FALSE), o$diagnostics)
+  }))
+  if (!is.null(dd)) {
+    utils::write.csv(dd, file.path(dirname(outfile), "diagnostics_disp.csv"),
+                     row.names = FALSE)
+    cat("wrote diagnostics_disp.csv with", nrow(dd), "rows\n")
+  }
+}
+
 ## The case studies, collated the same way but against no truth: there is none.
 case_files <- list.files(file.path(ROOT, "results_cases"), "\\.rds$",
                          recursive = TRUE, full.names = TRUE)
