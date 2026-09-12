@@ -118,7 +118,7 @@ echo "==> syncing code, priors and R/"
 rsync -a --delete \
   --exclude lib --exclude cmdstan_cache --exclude superceded \
   --exclude results --exclude results_cases --exclude fits --exclude fits_cases \
-  --exclude logs --exclude 'superseded-*' --exclude bayesnec-src \
+  --exclude logs --exclude 'superseded-*' --exclude bayesnec-src --exclude PROVENANCE \
   --exclude '*.sif' --exclude '.git' \
   --exclude '*.log' --exclude 'hpc/local.conf' --exclude '.bayesnec-src' \
   ./ "$HOST:$DEST/"
