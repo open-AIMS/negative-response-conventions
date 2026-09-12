@@ -107,17 +107,18 @@ ssh "$HOST" "mkdir -p $DEST"
 # programs identical across iterations, which is what makes the study
 # affordable. lib/ is excluded because the job builds it from the source below.
 #
-# --delete-excluded also removes receiver files that the sender does not have,
-# so everything the cluster owns and this machine does not has to be named here
-# or it is deleted. That is how logs/ was removed on 2026-09-12, after which
-# every array task failed in one second: SLURM could not create its output file
-# and died before the job script ran. results/, fits/ and logs/ are the
-# cluster's, not this machine's.
+# --delete, NOT --delete-excluded. The two are opposites for the paths named
+# below: --delete leaves an excluded path on the receiver alone, while
+# --delete-excluded goes out of its way to remove it. This script used the
+# second, so every --exclude here was an instruction to delete rather than to
+# protect. On 2026-09-12 that removed logs/, lib/, results/, results_cases/ and
+# the superseded-*/ archive of the previous run from the cluster in one command.
+# The Stan cache survived only because it lives outside the job directory.
 echo "==> syncing code, priors and R/"
-rsync -a --delete-excluded \
+rsync -a --delete \
   --exclude lib --exclude cmdstan_cache --exclude superceded \
   --exclude results --exclude results_cases --exclude fits --exclude fits_cases \
-  --exclude logs --exclude 'superseded-*' \
+  --exclude logs --exclude 'superseded-*' --exclude bayesnec-src \
   --exclude '*.sif' --exclude '.git' \
   --exclude '*.log' --exclude 'hpc/local.conf' --exclude '.bayesnec-src' \
   ./ "$HOST:$DEST/"

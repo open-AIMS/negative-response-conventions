@@ -26,7 +26,11 @@ every fit:
 `report.html` is the rendered report as it stood against that commit, kept for
 the same reason as the tables.
 
-The per-unit `.rds` files are not here: at 4,200 units they are large. They were
-moved aside on the cluster rather than deleted, into a `superseded-<timestamp>/`
-directory in the job directory, so they can still be recovered if a figure needs
-checking against the units behind it.
+The per-unit `.rds` files are gone. They were moved aside on the cluster rather
+than deleted, into a `superseded-<timestamp>/` directory, and then removed on
+2026-09-12 by an `rsync --delete-excluded` in `hpc/deploy.sh` — which deletes
+the paths named as exclusions rather than protecting them. The tables above are
+therefore the record of that run, and the figures the vignette and the report
+quoted from it remain checkable against them; the individual fits behind those
+figures do not survive. `hpc/deploy.sh` now uses `--delete`, which leaves an
+excluded path alone.
