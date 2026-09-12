@@ -56,8 +56,17 @@ if (file.exists(path)) {
 }
 dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)
 
+# One realisation per cell and arm is kept whole, for posterior predictive
+# checks and residual plots. Which one is decided by a fixed seed before any
+# result is seen; see exemplar_iteration().
+fit_path <- NULL
+if (u$iteration == exemplar_iteration(u$cell, u$arm, n_iter)) {
+  fit_path <- file.path(ROOT, "fits", sprintf("%s__%s.rds", u$cell, u$arm))
+}
+
 t0 <- Sys.time()
-out <- try(run_one(cl_tab[u$row, ], u$iteration, u$arm), silent = TRUE)
+out <- try(run_one(cl_tab[u$row, ], u$iteration, u$arm, fit_path = fit_path),
+           silent = TRUE)
 if (inherits(out, "try-error")) {
   out <- list(cell = u$cell, iteration = u$iteration, arm = u$arm,
               record = list(arm = u$arm, estimable = FALSE,

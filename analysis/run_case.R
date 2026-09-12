@@ -40,7 +40,10 @@ if (file.exists(path)) {
 dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)
 
 t0 <- Sys.time()
-out <- try(run_case(u$dataset, u$arm), silent = TRUE)
+out <- try(run_case(u$dataset, u$arm,
+                    fit_path = file.path(ROOT, "fits_cases",
+                                         sprintf("%s__%s.rds", u$dataset, u$arm))),
+           silent = TRUE)
 if (inherits(out, "try-error")) {
   out <- list(dataset = u$dataset, arm = u$arm,
               record = list(arm = u$arm, estimable = FALSE,

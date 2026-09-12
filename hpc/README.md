@@ -82,6 +82,24 @@ The case studies take `bnec()`'s own defaults instead. Each dataset and arm is
 fitted once, so there is no repetition for an identical program to save, and
 taking the defaults is the practice the case studies exist to show.
 
+## Saved fits
+
+One realisation per cell and arm is kept whole, and all 24 case-study fits are,
+for posterior predictive checks, residual plots and anything else that needs the
+object rather than a summary. Which realisation is drawn once from a seed fixed
+on the cell and arm names, so it is the same on every machine and every re-run,
+and it is decided before any result is seen: a fit chosen after the fact is a
+fit chosen for how it looks.
+
+They are not tracked. Sixty-six model-averaged fits at about 11MB each is not
+something to put in a repository, and each is reproducible from the code, the
+priors and `hpc/bayesnec.lock`. What keeping them saves is the hour of fitting.
+
+```sh
+./hpc/fetch-fits.sh              # all of them, about 700MB
+./hpc/fetch-fits.sh p1__gamma    # one, by name
+```
+
 ## Collecting
 
 ```sh

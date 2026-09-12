@@ -14,3 +14,8 @@ analysis/report_files/
 *.log
 hpc/local.conf
 .bayesnec-src/
+
+# Saved fits: ~11MB each, 42 + 24 of them. Kept on the cluster and fetched
+# on demand with hpc/fetch-fits.sh rather than tracked.
+fits/
+fits_cases/

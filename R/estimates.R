@@ -118,11 +118,44 @@ prior_for <- function(cell, arm, prior_dir = "priors") {
   readRDS(f)
 }
 
+#' The realisation whose fit is kept as the exemplar for a cell and arm
+#'
+#' One fit per cell and arm is saved whole, for posterior predictive checks,
+#' residual plots and anything else that needs the object rather than a summary.
+#' Which realisation is drawn once from a fixed seed and is therefore the same on
+#' every machine and every re-run, and is decided before any result is seen: a
+#' fit chosen after the fact is a fit chosen for how it looks.
+exemplar_iteration <- function(cell, arm, n_iter = 100L) {
+  # The draw is seeded from the names rather than from a counter, so adding a
+  # cell or an arm does not renumber the draws of the others.
+  #
+  # The RNG state is saved and restored: this is called from the runner, which
+  # goes on to simulate and to fit, and a helper that silently reseeds the
+  # global stream would make those depend on whether it had been called.
+  old <- if (exists(".Random.seed", envir = globalenv())) {
+    get(".Random.seed", envir = globalenv())
+  } else {
+    NULL
+  }
+  on.exit({
+    if (is.null(old)) {
+      suppressWarnings(rm(".Random.seed", envir = globalenv()))
+    } else {
+      assign(".Random.seed", old, envir = globalenv())
+    }
+  }, add = TRUE)
+  set.seed(sum(as.integer(charToRaw(paste0(cell, "|", arm)))))
+  sample.int(n_iter, 1L)
+}
+
 #' Everything one (cell, iteration, arm) contributes
 #'
 #' Written to its own file by the runner, so the run is resumable by existence
 #' check and a lost block costs only the block.
-run_one <- function(cl, iteration, arm, prior_dir = "priors") {
+#'
+#' @param fit_path If given, the fitted object is also saved there. Used for the
+#'   one exemplar realisation per cell and arm; see `exemplar_iteration()`.
+run_one <- function(cl, iteration, arm, prior_dir = "priors", fit_path = NULL) {
   dat <- cell_dataset(cl, iteration)
   pr <- prior_for(cl$cell, arm, prior_dir)
   res <- fit_arm(dat, arm, seed = 333L + iteration, disp = cl$disp, prior = pr)
@@ -131,6 +164,10 @@ run_one <- function(cl, iteration, arm, prior_dir = "priors") {
               record = rec, estimates = NULL, weights = NULL,
               diagnostics = NULL)
   if (is.null(res$fit)) return(out)
+  if (!is.null(fit_path)) {
+    dir.create(dirname(fit_path), recursive = TRUE, showWarnings = FALSE)
+    saveRDS(res$fit, fit_path)
+  }
   out$estimates <- arm_estimates(res$fit)
   out$weights <- try(arm_weights(res$fit), silent = TRUE)
   if (inherits(out$weights, "try-error")) out$weights <- NULL

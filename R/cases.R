@@ -80,7 +80,7 @@ case_queue <- function() {
 #' which is the only way to read them, because an equation whose shape suits the
 #' data badly fails the diagnostics whatever the data are doing and is given
 #' almost no weight for the same reason.
-run_case <- function(dataset, arm) {
+run_case <- function(dataset, arm, fit_path = NULL) {
   dsets <- case_datasets()
   if (!dataset %in% names(dsets)) stop("unknown dataset ", dataset)
   dat <- dsets[[dataset]]
@@ -94,6 +94,12 @@ run_case <- function(dataset, arm) {
               n_rows = nrow(dat), n_negative = sum(dat$sgr < 0),
               x_range = range(dat$x[dat$x > 0]))
   if (is.null(res$fit)) return(out)
+  # All 24 are kept: there are only 24, and each is a real dataset whose fit is
+  # worth being able to look at rather than re-derive.
+  if (!is.null(fit_path)) {
+    dir.create(dirname(fit_path), recursive = TRUE, showWarnings = FALSE)
+    saveRDS(res$fit, fit_path)
+  }
   out$estimates <- arm_estimates(res$fit)
   out$weights <- try(arm_weights(res$fit), silent = TRUE)
   if (inherits(out$weights, "try-error")) out$weights <- NULL
