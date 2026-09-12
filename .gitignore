@@ -3,6 +3,10 @@ cmdstan_cache/
 superceded/
 results/*/
 !results/.gitkeep
+# The per-unit records: 4,200 files and 21MB. The collated tables beside them
+# are what the report and the vignette quote, and they are tracked.
+results_cases/*/
+!results_cases/.gitkeep
 .Rhistory
 .RData
 *.sif
