@@ -1,0 +1,26 @@
+#!/bin/bash
+#SBATCH --job-name=nrc-exemplars
+#SBATCH --partition=cpuq
+#SBATCH --array=1-66
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=12GB
+#SBATCH --time=06:00:00
+#SBATCH --output=logs/nrc-ex-%A_%a.log
+
+# One task = one exemplar fit kept whole: 42 simulation units, one per cell and
+# arm, then the 24 case studies.
+#
+# Run against a completed study. It skips on the presence of the FIT rather than
+# of the result, so it neither redoes nor disturbs anything already collated.
+# The compile cache is warm by then, so most of each task is sampling.
+
+set -euo pipefail
+STUDY="${NRC_STUDY:-/export/scratch/$USER/negative-response-conventions}"
+source "$STUDY/hpc/job-common.sh"
+
+[ -f "$LIB/.installed" ] || {
+  echo "bayesnec is not installed in $LIB; run hpc/run.warmup first" >&2; exit 1; }
+
+nrc_r analysis/run_exemplar.R "$SLURM_ARRAY_TASK_ID"

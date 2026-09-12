@@ -22,7 +22,12 @@
 #' measurements on those two datasets.
 case_datasets <- function() {
   if (!requireNamespace("bayesnec", quietly = TRUE)) stop("bayesnec is required")
-  alga <- get("alga", envir = asNamespace("bayesnec"))
+  # Loaded through data() rather than fetched from the namespace: reaching into
+  # asNamespace() for a dataset works only once the package has been attached,
+  # so the namespace form failed in any script that had merely sourced R/.
+  e <- new.env(parent = emptyenv())
+  utils::data("alga", package = "bayesnec", envir = e)
+  alga <- e$alga
   alga$dataset <- factor(
     paste0(as.character(alga$species), ifelse(alga$contaminant == "B", "2", "")),
     levels = c("c_proliferum", "c_proliferum2", "r_salina", "r_salina2"))
