@@ -20,3 +20,5 @@ hpc/local.conf
 fits/
 fits_cases/
 fits_disp/
+results_disp/*/
+!results_disp/.gitkeep

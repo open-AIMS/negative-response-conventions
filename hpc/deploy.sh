@@ -117,7 +117,8 @@ ssh "$HOST" "mkdir -p $DEST"
 echo "==> syncing code, priors and R/"
 rsync -a --delete \
   --exclude lib --exclude cmdstan_cache --exclude superceded \
-  --exclude results --exclude results_cases --exclude fits --exclude fits_cases \
+  --exclude results --exclude results_cases --exclude results_disp \
+  --exclude fits --exclude fits_cases --exclude fits_disp \
   --exclude logs --exclude 'superseded-*' --exclude bayesnec-src --exclude PROVENANCE \
   --exclude '*.sif' --exclude '.git' \
   --exclude '*.log' --exclude 'hpc/local.conf' --exclude '.bayesnec-src' \

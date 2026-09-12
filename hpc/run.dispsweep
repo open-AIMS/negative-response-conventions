@@ -1,0 +1,26 @@
+#!/bin/bash
+#SBATCH --job-name=nrc-dispsweep
+#SBATCH --partition=cpuq
+#SBATCH --array=1-2000%300
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=12GB
+#SBATCH --time=08:00:00
+#SBATCH --output=logs/nrc-ds-%A_%a.log
+
+# The precision sweep re-run with a dispersion sub-model: 4 cells x 5 arms x 100
+# realisations. Answers whether untying the dispersion from the mean repairs the
+# bounded families for an analyst holding data that cannot be un-floored.
+#
+# --mem and --time are both above the study's. Every Stan program here is new --
+# a disp() term changes the source, so none of the study's compile cache applies
+# -- and a dispersion sub-model adds parameters, which costs sampling time.
+#
+# Idempotent: a unit whose result file exists is skipped.
+
+set -euo pipefail
+STUDY="${NRC_STUDY:-/export/scratch/$USER/negative-response-conventions}"
+source "$STUDY/hpc/job-common.sh"
+[ -f "$LIB/.installed" ] || { echo "bayesnec not installed; run hpc/run.warmup" >&2; exit 1; }
+nrc_r analysis/run_disp_sweep.R "$SLURM_ARRAY_TASK_ID" 100
