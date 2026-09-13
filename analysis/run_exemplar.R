@@ -33,23 +33,32 @@ sim$iteration <- mapply(exemplar_iteration, sim$cell, sim$arm)
 cas <- case_queue()
 cas <- data.frame(kind = "case", row = NA_integer_, cell = cas$dataset,
                   arm = cas$arm, iteration = NA_integer_, stringsAsFactors = FALSE)
-queue <- rbind(sim, cas)
+## The dispersion arms, appended rather than interleaved, so that adding them
+## does not renumber the 66 indices already run.
+dsp <- do.call(rbind, lapply(disp_cells(), function(cc) {
+  data.frame(kind = "disp", row = NA_integer_, cell = cc, arm = disp_arms()$arm,
+             iteration = NA_integer_, stringsAsFactors = FALSE)
+}))
+dsp$iteration <- mapply(exemplar_iteration, dsp$cell, dsp$arm)
+queue <- rbind(sim, cas, dsp)
 
 idx <- as.integer(commandArgs(trailingOnly = TRUE)[1])
 if (is.na(idx) || idx < 1L || idx > nrow(queue)) {
   stop("index outside 1:", nrow(queue))
 }
 u <- queue[idx, ]
-dir_out <- if (u$kind == "sim") "fits" else "fits_cases"
+dir_out <- switch(u$kind, sim = "fits", case = "fits_cases", disp = "fits_disp")
 path <- file.path(ROOT, dir_out, sprintf("%s__%s.rds", u$cell, u$arm))
 if (file.exists(path)) { cat("already have:", path, "\n"); quit(save = "no") }
 
 t0 <- Sys.time()
 if (u$kind == "sim") {
   invisible(run_one(cl_tab[u$row, ], u$iteration, u$arm, fit_path = path))
-} else {
+} else if (u$kind == "case") {
   invisible(run_case(u$cell, u$arm, fit_path = path))
+} else {
+  invisible(run_disp_unit(u$cell, u$arm, u$iteration, fit_path = path))
 }
 cat(sprintf("exemplar %d  %s %s/%s%s  %.1f min\n", idx, u$kind, u$cell, u$arm,
-            if (u$kind == "sim") paste0("/iter ", u$iteration) else "",
+            if (u$kind == "case") "" else paste0("/iter ", u$iteration),
             as.numeric(difftime(Sys.time(), t0, units = "mins"))))

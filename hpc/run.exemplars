@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=nrc-exemplars
 #SBATCH --partition=cpuq
-#SBATCH --array=1-66
+#SBATCH --array=1-86
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
@@ -10,7 +10,9 @@
 #SBATCH --output=logs/nrc-ex-%A_%a.log
 
 # One task = one exemplar fit kept whole: 42 simulation units, one per cell and
-# arm, then the 24 case studies.
+# arm; then the 24 case studies; then 20 dispersion-sweep units, one per cell and
+# dispersion arm. Appended in that order so that adding the last block does not
+# renumber the indices of the first two.
 #
 # Run against a completed study. It skips on the presence of the FIT rather than
 # of the result, so it neither redoes nor disturbs anything already collated.

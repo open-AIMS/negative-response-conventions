@@ -49,7 +49,8 @@ disp_queue <- function(n_iter = 100L, arms = disp_arms()$arm) {
 #' Everything one dispersion-sweep unit contributes
 #'
 #' The same record as a study unit, so the two collate together.
-run_disp_unit <- function(cell, arm, iteration, prior_dir = "priors_disp") {
+run_disp_unit <- function(cell, arm, iteration, prior_dir = "priors_disp",
+                          fit_path = NULL) {
   spec <- disp_arms()[disp_arms()$arm == arm, ]
   if (!nrow(spec)) stop("unknown dispersion arm ", arm)
   cl <- cells()[cells()$cell == cell, ]
@@ -61,6 +62,10 @@ run_disp_unit <- function(cell, arm, iteration, prior_dir = "priors_disp") {
               record = res$record, estimates = NULL, weights = NULL,
               diagnostics = NULL)
   if (is.null(res$fit)) return(out)
+  if (!is.null(fit_path)) {
+    dir.create(dirname(fit_path), recursive = TRUE, showWarnings = FALSE)
+    saveRDS(res$fit, fit_path)
+  }
   out$estimates <- arm_estimates(res$fit)
   out$weights <- try(arm_weights(res$fit), silent = TRUE)
   if (inherits(out$weights, "try-error")) out$weights <- NULL

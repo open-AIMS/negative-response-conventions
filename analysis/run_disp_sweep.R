@@ -39,10 +39,8 @@ if (u$iteration == exemplar_iteration(u$cell, u$arm, n_iter)) {
 }
 
 t0 <- Sys.time()
-out <- try({
-  o <- run_disp_unit(u$cell, u$arm, u$iteration)
-  o
-}, silent = TRUE)
+out <- try(run_disp_unit(u$cell, u$arm, u$iteration, fit_path = fit_path),
+           silent = TRUE)
 if (inherits(out, "try-error")) {
   out <- list(cell = u$cell, iteration = u$iteration, arm = u$arm,
               record = list(arm = u$arm, estimable = FALSE,
