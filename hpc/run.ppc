@@ -1,0 +1,23 @@
+#!/bin/bash
+#SBATCH --job-name=nrc-ppc
+#SBATCH --partition=cpuq
+#SBATCH --array=1-3600%300
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=12GB
+#SBATCH --time=08:00:00
+#SBATCH --output=logs/nrc-ppc-%A_%a.log
+
+# Predicted against observed residual spread over 100 realisations, for the nine
+# arms whose variance model is in question on the four precision cells.
+#
+# The statistic was first computed from one saved exemplar per cell, which
+# cannot separate a difference between arms from realisation noise. Every Stan
+# program here is already in the cache, so the cost is sampling.
+
+set -euo pipefail
+STUDY="${NRC_STUDY:-/export/scratch/$USER/negative-response-conventions}"
+source "$STUDY/hpc/job-common.sh"
+[ -f "$LIB/.installed" ] || { echo "bayesnec not installed; run hpc/run.warmup" >&2; exit 1; }
+nrc_r analysis/run_ppc.R "$SLURM_ARRAY_TASK_ID" 100

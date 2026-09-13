@@ -195,6 +195,50 @@ if (length(disp_files)) {
   }
 }
 
+## The spread diagnostic, summarised over realisations. The control group is the
+## lowest predictor value and the floor group the highest; the two ratios are
+## what a correctly specified variance model puts at one.
+ppc_files <- list.files(file.path(ROOT, "results_ppc"), "^iter_\\d+\\.rds$",
+                        recursive = TRUE, full.names = TRUE)
+if (length(ppc_files)) {
+  cat("\ncollating", length(ppc_files), "spread files\n")
+  pr <- do.call(rbind, lapply(ppc_files, function(f) {
+    o <- readRDS(f)
+    if (is.null(o$spread)) return(NULL)
+    s <- o$spread[order(o$spread$x), ]
+    data.frame(cell = o$cell, arm = o$arm, iteration = o$iteration,
+               sigma_generated = o$sigma_generated,
+               sd_pred_control = s$sd_pred[1],
+               sd_obs_control = s$sd_obs[1],
+               sd_pred_floor = s$sd_pred[nrow(s)],
+               sd_obs_floor = s$sd_obs[nrow(s)],
+               stringsAsFactors = FALSE)
+  }))
+  if (!is.null(pr)) {
+    pr$control_ratio <- pr$sd_pred_control / pr$sigma_generated
+    # Guarded: a Gamma's predicted spread at the floored values goes to zero, and
+    # an unguarded ratio then reports Inf, which no summary survives.
+    pr$gradient <- ifelse(pr$sd_pred_floor > 1e-9,
+                          pr$sd_pred_control / pr$sd_pred_floor, NA_real_)
+    ps <- do.call(rbind, lapply(split(pr, list(pr$cell, pr$arm), drop = TRUE),
+                                function(g) data.frame(
+      cell = g$cell[1], arm = g$arm[1], n = nrow(g),
+      control_ratio = mean(g$control_ratio),
+      control_ratio_lo = stats::quantile(g$control_ratio, 0.025, names = FALSE),
+      control_ratio_hi = stats::quantile(g$control_ratio, 0.975, names = FALSE),
+      control_mcse = stats::sd(g$control_ratio) / sqrt(nrow(g)),
+      gradient_median = stats::median(g$gradient, na.rm = TRUE),
+      n_floor_zero = sum(is.na(g$gradient)),
+      stringsAsFactors = FALSE)))
+    ps <- ps[order(ps$arm, ps$cell), ]
+    pf <- file.path(dirname(outfile), "ppc_spread.csv")
+    utils::write.csv(ps, pf, row.names = FALSE)
+    utils::write.csv(pr, file.path(dirname(outfile), "ppc_spread_raw.csv"),
+                     row.names = FALSE)
+    cat("wrote", pf, "with", nrow(ps), "rows\n")
+  }
+}
+
 ## The case studies, collated the same way but against no truth: there is none.
 case_files <- list.files(file.path(ROOT, "results_cases"), "\\.rds$",
                          recursive = TRUE, full.names = TRUE)
