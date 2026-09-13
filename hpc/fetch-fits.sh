@@ -16,15 +16,24 @@ cd "$(dirname "${BASH_SOURCE[0]}")/.."
 ACCOUNT="${HOST%@*}"
 DEST="${DEST:-/export/scratch/$ACCOUNT/negative-response-conventions}"
 
-mkdir -p fits fits_cases
+# Every directory the study saves fits into. Named in one place: adding a new
+# one and forgetting it here returns a silent zero rather than an error, which
+# is what happened when fits_disp/ was added.
+DIRS="fits fits_cases fits_disp"
+mkdir -p $DIRS
 if [ $# -eq 0 ]; then
-  rsync -a --info=progress2 "$HOST:$DEST/fits/" fits/
-  rsync -a --info=progress2 "$HOST:$DEST/fits_cases/" fits_cases/
+  for d in $DIRS; do
+    rsync -a --info=progress2 "$HOST:$DEST/$d/" "$d/" 2>/dev/null || true
+  done
 else
   for n in "$@"; do
-    rsync -a "$HOST:$DEST/fits/$n.rds" fits/ 2>/dev/null \
-      || rsync -a "$HOST:$DEST/fits_cases/$n.rds" fits_cases/ \
-      || { echo "no fit named $n on the cluster" >&2; exit 1; }
+    got=no
+    for d in $DIRS; do
+      rsync -a "$HOST:$DEST/$d/$n.rds" "$d/" 2>/dev/null && { got=yes; break; }
+    done
+    [ "$got" = yes ] || { echo "no fit named $n on the cluster" >&2; exit 1; }
   done
 fi
-echo "have: $(ls fits fits_cases 2>/dev/null | grep -c '\.rds$') fits"
+for d in $DIRS; do
+  echo "$d: $(ls "$d"/*.rds 2>/dev/null | wc -l) fits"
+done
