@@ -61,6 +61,45 @@ Every script puts it first on `.libPaths()`. Do not run against a different
 installed version: the study exists to measure behaviour that changed in
 2.2.0, and an older library silently measures the old behaviour.
 
+## Work kept but not reported
+
+Two sets of results are in this repository and are cited by neither the report
+nor the vignette. They are kept because they were run properly and their
+outcomes are informative, and recorded here so that their absence from the
+write-up is a decision rather than an oversight.
+
+The dispersion sweep asked whether letting a family's dispersion parameter vary
+along the curve repairs the conventions that impose the zero boundary through
+the response distribution. Five arms on the four precision cells, 100
+realisations each: `floored`, `gamma` and `beta` under `disp("loglinear")`, and
+the two bounded families under `disp("power")` as well. The code is
+`R/disp_arms.R` with `analysis/run_disp_sweep.R`, the priors are in
+`priors_disp/`, and the results are `results/metrics_disp.csv` and
+`results/diagnostics_disp.csv`. All 2,000 units were estimable.
+
+Its outcome is mostly negative. A dispersion sub-model does not correct the
+Gamma's variance structure — `disp("loglinear")` returns the control level to
+1.01 of the generated value in the noisiest cell while leaving a control-to-
+floor gradient of 18 to 32, and `disp("power")` returns a gradient of 1.8 to 5.1
+with a control level of 1.11 to 1.82, against a true gradient and level of one.
+The Beta needs no correction and both forms make it worse. Adding one to a
+Gaussian, whose variance model is already correct, manufactures a gradient of
+1.7 to 2.2 where the data have none. One result is not negative and is not
+explained: `beta` under `disp("loglinear")` reports an ErC50 bias within two per
+cent at every precision with coverage 0.97 to 1.00, against -4.4% to -5.8% with
+coverage falling to 0.52 without it. That happens while the arm's variance model
+deteriorates, so it is not a variance effect, and the mechanism is unknown.
+
+The five fits under `archive/disp-probe/` are the exploratory ones that preceded
+that sweep. They took `bnec()`'s own default priors rather than the fixed priors
+the sweep uses and cover one cell, so they are not comparable with it and are
+kept only as the record of what prompted it.
+
+The spread diagnostic behind `results/ppc_spread.csv` is cited, in Section 5.3
+of the vignette; it is listed here because its code sits beside the dispersion
+work and the two are easily confused. It measures whether a family reproduces
+the generated residual spread. It does not attempt to correct one.
+
 ## Provenance
 
 - `bayesnec` built from `open-AIMS/bayesnec` at `0976caca` (`dev`), version
