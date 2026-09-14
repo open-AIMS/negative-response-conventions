@@ -95,7 +95,7 @@ run_case <- function(dataset, arm, fit_path = NULL) {
   # prepared data is the practice the case studies exist to show.
   res <- fit_arm(dat, arm, seed = 333L, prior = NULL)
   out <- list(dataset = dataset, arm = arm, record = res$record,
-              estimates = NULL, weights = NULL, diagnostics = NULL,
+              estimates = NULL, draws = NULL, weights = NULL, diagnostics = NULL,
               n_rows = nrow(dat), n_negative = sum(dat$sgr < 0),
               x_range = range(dat$x[dat$x > 0]))
   if (is.null(res$fit)) return(out)
@@ -106,6 +106,8 @@ run_case <- function(dataset, arm, fit_path = NULL) {
     saveRDS(res$fit, fit_path)
   }
   out$estimates <- arm_estimates(res$fit)
+  out$draws <- try(arm_draws(res$fit), silent = TRUE)
+  if (inherits(out$draws, "try-error")) out$draws <- NULL
   out$weights <- try(arm_weights(res$fit), silent = TRUE)
   if (inherits(out$weights, "try-error")) out$weights <- NULL
   out$diagnostics <- try(arm_diagnostics(res$fit), silent = TRUE)

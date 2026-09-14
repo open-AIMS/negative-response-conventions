@@ -27,6 +27,33 @@ arm_estimates <- function(fit) {
   )
 }
 
+#' The posterior draws behind the three estimates
+#'
+#' Kept per unit because the summary functions change. bayesnec #325 altered
+#' what `nsec()` reports -- draws whose NSEC is the control concentration were
+#' being discarded, which biased every lower bound -- and because no draws had
+#' been retained, re-reading the study under the fix meant refitting all 4,200
+#' units rather than re-summarising them. 188 KB per unit against 10 MB for the
+#' fit itself, so this is the cheap half of that insurance.
+#'
+#' A summary computed from these will not always equal the one `arm_estimates()`
+#' recorded: the point estimate and the interval come from the same draws, but a
+#' later version of the estimator may summarise them differently. The draws are
+#' the record; the estimates are one reading of them.
+arm_draws <- function(fit) {
+  one <- function(f) {
+    v <- try(suppressWarnings(f()), silent = TRUE)
+    if (inherits(v, "try-error")) NULL else as.numeric(v)
+  }
+  list(
+    ErC10 = one(function()
+      bayesnec::ecx(fit, ecx_val = 10, type = "absolute", posterior = TRUE)),
+    ErC50 = one(function()
+      bayesnec::ecx(fit, ecx_val = 50, type = "absolute", posterior = TRUE)),
+    NSEC = one(function() bayesnec::nsec(fit, posterior = TRUE))
+  )
+}
+
 #' Mean model weight per equation, and how many equations survived
 #'
 #' The weights answer question 5: which shape each convention makes the data
@@ -161,7 +188,7 @@ run_one <- function(cl, iteration, arm, prior_dir = "priors", fit_path = NULL) {
   res <- fit_arm(dat, arm, seed = 333L + iteration, disp = cl$disp, prior = pr)
   rec <- res$record
   out <- list(cell = cl$cell, iteration = iteration, arm = arm,
-              record = rec, estimates = NULL, weights = NULL,
+              record = rec, estimates = NULL, draws = NULL, weights = NULL,
               diagnostics = NULL)
   if (is.null(res$fit)) return(out)
   if (!is.null(fit_path)) {
@@ -169,6 +196,8 @@ run_one <- function(cl, iteration, arm, prior_dir = "priors", fit_path = NULL) {
     saveRDS(res$fit, fit_path)
   }
   out$estimates <- arm_estimates(res$fit)
+  out$draws <- try(arm_draws(res$fit), silent = TRUE)
+  if (inherits(out$draws, "try-error")) out$draws <- NULL
   out$weights <- try(arm_weights(res$fit), silent = TRUE)
   if (inherits(out$weights, "try-error")) out$weights <- NULL
   # Carried for the same reason the case studies carry it: a diagnostic is only
