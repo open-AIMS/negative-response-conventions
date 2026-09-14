@@ -320,7 +320,7 @@ situation they are in.
 ## Convergence, read against model weight
 
 Every fit records `rhat` and the tail effective sample size for the curve
-parameters of each equation in its candidate set, beside the stacking weight
+parameters of each equation in its candidate set, beside the model weight
 that equation holds. The two are only readable together. An equation whose shape
 suits the data badly fails a diagnostic whatever the data are doing, and is
 given almost no weight for the same reason, so a failure on a near-zero-weight
@@ -340,7 +340,7 @@ diagnostics |>
   knitr::kable(digits = 3,
     col.names = c("cell", "arm", "weight on rhat > 1.01",
                   "weight on tail ESS < 400"),
-    caption = "**Table 4.** Mean stacking weight held by equations that fail a convergence diagnostic, by cell and arm, over the realisations of that cell. Twelve worst shown. A row near zero means the diagnostics that failed were on equations the average barely used.")
+    caption = "**Table 4.** Mean model weight held by equations that fail a convergence diagnostic, by cell and arm, over the realisations of that cell. Twelve worst shown. A row near zero means the diagnostics that failed were on equations the average barely used.")
 ```
 
 The previous run of this study recorded no diagnostics at all, so when the
@@ -454,7 +454,8 @@ over the declining candidate set its family allows. It ran on the AIMS HPC as
 SLURM arrays, one unit per task.
 
 `bayesnec` is pinned at the commit named in `hpc/bayesnec.lock`, on the `dev`
-branch. That is a development commit rather than a CRAN release, and the
+branch. Model weights are `bnec()`'s default, pseudo-BMA with a Bayesian
+bootstrap; `loo_controls` is never passed. That is a development commit rather than a CRAN release, and the
 difference matters here more than it usually would, because what this study
 measures is what package defaults do.
 

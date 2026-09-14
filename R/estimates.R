@@ -67,7 +67,7 @@ ZERO_ASYMPTOTE <- c("nec3param", "ecxexp", "ecxsigm", "ecxwb1p3", "ecxwb2p3",
 #'
 #' Reported together because that is the only way to read them: an equation
 #' whose shape suits the data badly fails a diagnostic whatever the data are
-#' doing, and is given almost no stacking weight for the same reason, so a
+#' doing, and is given almost no model weight for the same reason, so a
 #' failure on a near-zero-weight equation says something about that curve and
 #' nothing about the model-averaged estimates. Measured on one real dataset
 #' during the rewrite, `nec3param` had a tail ESS of 148 and a weight of

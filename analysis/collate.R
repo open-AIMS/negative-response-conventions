@@ -131,7 +131,7 @@ if (have_sim) {
     df <- file.path(dirname(outfile), "diagnostics.csv")
     utils::write.csv(diag_tab, df, row.names = FALSE)
     cat("wrote", df, "with", nrow(diag_tab), "rows\n")
-    ## The only reading of a diagnostic that means anything: how much stacking
+    ## The only reading of a diagnostic that means anything: how much model
     ## weight sits on equations that failed one. An equation whose shape suits the
     ## data badly fails whatever the data are doing and is given almost no weight
     ## for the same reason.
