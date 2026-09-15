@@ -1,0 +1,26 @@
+#!/bin/bash
+#SBATCH --job-name=nrc-panel
+#SBATCH --partition=cpuq
+#SBATCH --array=1-6
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=12GB
+#SBATCH --time=06:00:00
+#SBATCH --output=logs/nrc-panel-%A_%a.log
+
+# One task = one convention, all six fitted to the SAME simulated dataset, for
+# the worked-example figure in example7. The saved exemplars in fits/ draw a
+# different realisation per arm and so cannot be placed side by side.
+#
+# NOTE: SLURM creates the --output file before this script runs, so logs/ must
+# exist at submission time. hpc/submit.sh makes it; a bare sbatch of this file
+# does not, and the task then fails in one second with no log to say why.
+set -euo pipefail
+STUDY="${NRC_STUDY:-/export/scratch/$USER/negative-response-conventions}"
+source "$STUDY/hpc/job-common.sh"
+
+[ -f "$LIB/.installed" ] || {
+  echo "bayesnec is not installed in $LIB; run hpc/run.warmup first" >&2; exit 1; }
+
+nrc_r analysis/run_example_panel.R "$SLURM_ARRAY_TASK_ID"

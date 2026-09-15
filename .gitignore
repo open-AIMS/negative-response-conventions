@@ -24,3 +24,4 @@ results_disp/*/
 !results_disp/.gitkeep
 results_ppc/*/
 !results_ppc/.gitkeep
+fits_example/
